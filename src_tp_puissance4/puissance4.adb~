@@ -5,7 +5,7 @@ with Ada.Text_IO; use Ada.Text_IO;
 with Liste_Generique ;
 
 package body puissance4 is 
-type Coup is record
+type Cellule is record
 		Val: Integer;
 		Suiv: Liste;
 	end record;
