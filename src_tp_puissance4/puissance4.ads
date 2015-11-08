@@ -41,8 +41,9 @@ package puissance4 is
     -- Retourne le prochaine coup joue par le joueur1
     function Coup_Joueur1(E : Etat) return Coup;
     -- Retourne le prochaine coup joue par le joueur2   
-    --function Coup_Joueur2(E : Etat) return Coup;
-  
+    function Coup_Joueur2(E : Etat) return Coup;
+  	-- Initialisation du plateau
+	procedure Initialiser(E : in out Etat);
 private
     -- Representation de l'etat du tableau de jeu
 	type Etat is array (1..boardGameWidth,1..boardGameHeight) of Character ;

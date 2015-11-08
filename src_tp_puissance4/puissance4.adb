@@ -205,8 +205,53 @@ package body puissance4 is
 	end Coup_Joueur1;
 
     -- Retourne le prochain coup joue par le joueur2   
-    --function Coup_Joueur2(E : Etat) return Coup is
-	--begin
-	--end Coup_Joueur2;
+    function Coup_Joueur2(E : Etat) return Coup is
+	Play : Coup;
+		isValid : Boolean := false;
+		Row : Integer;
+		Column : Integer;
+	begin
+
+		while isValid = false loop
+			Put_Line("It's time for number 1 to play");
+			Put_Line("Select the Row number where you want to play");
+
+			Ada.Integer_Text_IO.Get(Column);
+
+			if Column < 1 or Column > boardGameWidth then
+				Put("The value must be between 1 and ");
+				Put(Integer'Image(boardGameWidth));
+				Put_Line("Please try again");
+			else
+				Row := 1;
+				while Row < boardGameHeight+1 and E(Row, Column) /= signEmptyCase loop
+					Row := Row + 1;
+				end loop;  
+
+				if Row > boardGameHeight then 
+					Put_Line("This column is already full, please try again");
+				elsif E(Row,Column)=signEmptyCase then
+					Play := new CelluleC'(signPlayer2, Column, Row);
+					isValid:=true;
+				else 
+					Put_Line("There is an error");	
+				end if;
+			end if;
+		end loop;
+		return Play;
+	end Coup_Joueur2;
+
+	procedure Initialiser(E:in out Etat) is 
+		Row : Integer;
+		Column : Integer;
+	begin
+		for Row in 1..boardGameHeight loop
+			for Column in 1..boardGameWidth loop
+				E(Row,Column):= signEmptyCase;
+			end loop;
+		end loop;
+	end Initialiser;
+
+
 
 end puissance4;
