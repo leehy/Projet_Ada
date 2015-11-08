@@ -5,7 +5,28 @@ with Ada.Text_IO; use Ada.Text_IO;
 with Liste_Generique ;
 
 generic 
+	
+	signPlayer1 : Character;
+	signPlayer2 : Character;
+	signEmptyCase : Character;
+	nbCheckersToWin : Integer;
+	boardGameWidth : Integer;
+	boardGameHeight : Integer;
+	
+
 package puissance4 is 
+
+	type Etat is private;
+
+	type CelluleC is record
+		-- Signe du coup
+		Sign : Character;
+		-- numero de la colonne
+		numColumn : Integer;
+		-- numero de la ligne
+		numRow : Integer;
+	end record;
+	type Coup is access CelluleC;
 
 	-- Calcule l'etat suivant en appliquant le coup
     function Etat_Suivant(E : Etat; C : Coup) return Etat;
@@ -20,8 +41,10 @@ package puissance4 is
     -- Retourne le prochaine coup joue par le joueur1
     function Coup_Joueur1(E : Etat) return Coup;
     -- Retourne le prochaine coup joue par le joueur2   
-    function Coup_Joueur2(E : Etat) return Coup;   
+    --function Coup_Joueur2(E : Etat) return Coup;
+  
 private
-    type Etat is private;
-    type Coup is private;
-	type ListeCoup is access Coup;
+    -- Representation de l'etat du tableau de jeu
+	type Etat is array (1..boardGameWidth,1..boardGameHeight) of Character ;
+
+end puissance4;
