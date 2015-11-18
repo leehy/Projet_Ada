@@ -241,12 +241,13 @@ package body puissance4 is
 		return Play;
 	end Coup_Joueur2;
 
-	procedure Initialiser(E:in out Etat, Etp : in out EtatTopPion) is 
+	--procedure Initialiser(E:in out Etat, Etp : in out EtatTopPion) is 
+	procedure Initialiser(E : in out Etat) is
 		Row : Integer;
 		Column : Integer;
 	begin
 		for Column in 1..boardGameWidth loop
-			Etp(Row)=0;
+			--Etp(Row)=0;
 			for Row in 1..boardGameHeight loop
 				E(Row,Column):= signEmptyCase;
 			end loop;
@@ -254,6 +255,38 @@ package body puissance4 is
 
 	end Initialiser;
 
+	function Coups_Possibles(E : Etat; J : Joueur) return Liste_Coups.Liste is
+		Row : Integer:=1;
+		Column : Integer:=1;
+		L : Liste_Coups.Liste;
+		Sign : Character;
+		CoupPossible : Coup;
+	begin
+		for Column in 1..boardGameWidth loop
+				while Row < boardGameHeight+1 and E(Row, Column) /= signEmptyCase loop
+					Row := Row + 1;
+				end loop;
+				if Row < boardGameHeight + 1 then
+					if J = Joueur1 then
+						Sign := signPlayer1;
+					else 
+						Sign := signPlayer2;
+					end if;
+					CoupPossible := new CelluleC(Sign, Row, Column);
+					L.Insere_Tete(CoupPossible, L);
+				else 
+					Put("The column ");
+					Put(Integer'Image(Column));
+					Put(" is full");
+				end if;
+				
+		end loop;
+		return L;
+	end Coups_Possibles;
+
+	function Eval ( E : Etat ) return Integer is 
+	begin	
+	end Eval;
 
 
 end puissance4;

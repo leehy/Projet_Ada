@@ -18,7 +18,8 @@ generic
     -- Implantation d'un package de liste de coups
     with package Liste_Coups is new Liste_Generique(Coup, Affiche_Coup); 
     -- Retourne la liste des coups possibles pour J a partir de l'etat 
-    with function Coups_Possibles(E : Etat; J : Joueur) return Liste_Coups.Liste; 
+    with function Coups_Possibles(E : Etat; J : Joueur)
+            return Liste_Coups.Liste; 
     -- Evaluation statique du jeu du point de vue de l'ordinateur
     with function Eval(E : Etat) return Integer;   
     -- Profondeur de recherche du coup
