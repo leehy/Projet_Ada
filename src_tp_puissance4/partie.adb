@@ -12,6 +12,7 @@ with Participant; use Participant;
 	JBis : Joueur;
 	
 	begin
+	Affiche_Jeu(E);
 	--T'as pas besoin d'initialiser car ça se fait deja dans le main2joueur 
 
 	--Initialiser(E); --On initialise la table de jeu.	
@@ -38,11 +39,11 @@ with Participant; use Participant;
 		if (J=Joueur1) then
 			Put("1"); else Put("2");
 		end if;
-			Put("a gagné!");
+			Put_Line(" a gagné!");
 	end if;
 	
 	if Est_Nul(E) then
-		Put("Match Nul!");
+		Put_Line("Match Nul!");
 	end if;
 	
 	if (J=Joueur1) then JBis := Joueur2;

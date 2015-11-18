@@ -148,8 +148,9 @@ package body puissance4 is
 	begin 
 		Put("|");
 		for Column in 1..boardGameWidth loop
-			Put(Integer'Image(Column) & "|");
+			Put(Integer'Image(Column) & " |");
 		end loop;
+		Put_Line("");
 
 		for Row in reverse 1..boardGameHeight loop
 			Put("|");
