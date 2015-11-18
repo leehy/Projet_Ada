@@ -241,17 +241,15 @@ package body puissance4 is
 		return Play;
 	end Coup_Joueur2;
 
-	procedure Initialiser(E:in out Etat, Etp : in out EtatTopPion) is 
+	procedure Initialiser(E:in out Etat) is 
 		Row : Integer;
 		Column : Integer;
 	begin
-		for Column in 1..boardGameWidth loop
-			Etp(Row)=0;
-			for Row in 1..boardGameHeight loop
+		for Row in 1..boardGameHeight loop
+			for Column in 1..boardGameWidth loop
 				E(Row,Column):= signEmptyCase;
 			end loop;
 		end loop;
-
 	end Initialiser;
 
 

@@ -43,7 +43,7 @@ package puissance4 is
     -- Retourne le prochaine coup joue par le joueur2   
     function Coup_Joueur2(E : Etat) return Coup;
   	-- Initialisation du plateau
-	procedure Initialiser(E : in out Etat, Etp : in out EtatTopPion);
+	procedure Initialiser(E : in out Etat);
 private
 	-- Representation d'un tableau de compteur qui nous permettra d'obtenir la position du pion place au plus haut du jeu
 	type EtatTopPion is array (1..boardGameWidth) of Integer;
