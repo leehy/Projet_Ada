@@ -1,4 +1,4 @@
-with liste_generique; use liste_generique;
+with liste_generique; 
 with Ada.Text_IO; use Ada.Text_IO;
 with Participant; use Participant;
 	
@@ -12,7 +12,9 @@ with Participant; use Participant;
 	JBis : Joueur;
 	
 	begin
-	Initialiser(E); --On initialise la table de jeu.	
+	--T'as pas besoin d'initialiser car ça se fait deja dans le main2joueur 
+
+	--Initialiser(E); --On initialise la table de jeu.	
 	--Put_line("Choisissez la colonne dans laquelle vous voulez jouer");
 	--loop Get(C.numColumn); -- Le placement va definir le coup joue
 		--exit when (C < boardGameWidth - 1 or else C > 1);

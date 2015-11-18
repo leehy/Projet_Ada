@@ -1,0 +1,97 @@
+V "GNAT Lib v4.6"
+P SS ZX
+R nnnnnnnnnnnnnnnnnnnnnnnnnvnnnnnnnnnnnvnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+
+U partie%b		partie.adb		33eb4214 NE OO PK GE
+W ada%s			ada.ads			ada.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W liste_generique%s	liste_generique.adb	liste_generique.ali
+W participant%s		participant.adb		participant.ali
+
+U partie%s		partie.ads		48f58401 BN EE NE OO PK GE
+W ada%s			ada.ads			ada.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W liste_generique%s	liste_generique.adb	liste_generique.ali
+W participant%s		participant.adb		participant.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20090727140100 0c711ac9
+D a-finali.ads		20090409150019 e5e85fa4
+D a-filico.ads		20090409150019 872dc219
+D a-inteio.ads		20070406091342 f64b89a4
+D a-ioexce.ads		20091130110856 8b9de6cd
+D a-stream.ads		20090409150019 2ca4ee37
+D a-string.ads		20070406091342 90ac6797
+D a-tags.ads		20101021101406 c7695348
+D a-textio.ads		20091028140912 386df5d4
+D a-tiinio.ads		20090409150019 aa04e5d6
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-uncdea.ads		20070406091342 f15a5ed1
+D interfac.ads		20090409150019 f77d8799
+D i-cstrea.ads		20100622165701 1bd72c32
+D liste_generique.ads	20151025180743 d0d4d811
+D liste_generique.adb	20151108205754 dd01fb8a
+D participant.ads	20151108142348 d33efd3c
+D partie.ads		20151118143928 737254f8
+D partie.adb		20151118143922 7b1ec615
+D system.ads		20120503154647 23e1f70b
+D s-crtl.ads		20100617122610 ac77b159
+D s-exctab.ads		20090417131547 66e51330
+D s-ficobl.ads		20100909103250 443b9d66
+D s-finimp.ads		20090409150019 46853fe8
+D s-finroo.ads		20090409150019 dbb860c9
+D s-parame.ads		20091130110856 9c5d83fa
+D s-secsta.ads		20090707124243 eea35a36
+D s-soflin.ads		20090729085153 9414c974
+D s-stache.ads		20090417130712 596fc1b4
+D s-stalib.ads		20101021102512 c4241c00
+D s-stoele.ads		20090417130712 facd7d98
+D s-stoele.adb		20100617152355 afc5dc80
+D s-stratt.ads		20100909123135 aedef97e
+D s-traent.ads		20090417130712 5221ee41
+D s-unstyp.ads		20090409150019 6ae15c76
+D s-wchcon.ads		20090417130712 bfeb2e3d
+X 1 ada.ads
+16K9*Ada 19e8 19|2r6 20|2r6 2r23
+X 10 a-textio.ads
+49K13*Text_IO 472e16 19|2w10 20|2w10 2r27
+243U14*Put 20|37s17 39s25 39s40 41s25 45s17
+X 16 liste_generique.ads
+15k9*liste_Generique 63e20 19|1w6 20|1w6
+X 18 participant.ads
+6K9*Participant 13e16 19|1w23 3r5 20|3w6 3r23
+8E10*Joueur 8e38 19|16r45 36r51 20|9r51 12r16
+8n21*Joueur1{8E10} 20|22r15 38r23 48r15 49r22
+8n30*Joueur2{8E10} 20|48r37
+X 19 partie.ads
+6+10 Etat 14r36 14r59 16r35 18r31 20r36 24r36 26r36 36r38 20|9r38
+7+10 Coup 14r46 22r40 24r49 26r49 20|11r24
+10s5 Nom_Joueur1{string}
+12s5 Nom_Joueur2{string}
+14V19 Etat_Suivant{6+10} 14>32 14>42 20|25s22 29s22
+14*32 E{6+10}
+14*42 C{7+10}
+16V19 Est_Gagnant{boolean} 16>31 16>41 20|35s12
+16*31 E{6+10}
+16e41 J{18|8E10}
+18V19 Est_Nul{boolean} 18>27 20|44s12
+18*27 E{6+10}
+20U20 Affiche_Jeu 20>32 20|32s9
+20*32 E{6+10}
+22U20 Affiche_Coup 22>33 20|24s17 28s17
+22*33 C{7+10}
+24V19 Coup_Joueur1{7+10} 24>32 20|23s26
+24*32 E{6+10}
+26V19 Coup_Joueur2{7+10} 26>32 20|27s26
+26*32 E{6+10}
+30k9*Partie 6z10 7z10 10z5 12z5 14z19 16z19 18z19 20z20 22z20 24z19 26z19
+. 38l5 38e11 20|5b22 55l5 55t11
+36U15*Joue_Partie 36=27 36>44 20|9b15 52s9 54l9 54t20
+36*27 E{6+10} 20|9b27 23r39 25m17 25r35 27r39 29m17 29r35 32r21 35r24 44r20
+. 52m21
+36e44 J{18|8E10} 20|9b44 22r13 35r26 38r21 48r13
+X 20 partie.adb
+11*9 Coup1{19|7+10} 23m17 24r30 25r37
+11*16 Coup2{19|7+10} 27m17 28r30 29r37
+12e9 JBis{18|8E10} 48m29 49m14 52r24
+

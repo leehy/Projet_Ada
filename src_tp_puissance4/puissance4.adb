@@ -243,8 +243,8 @@ package body puissance4 is
 
 	--procedure Initialiser(E:in out Etat, Etp : in out EtatTopPion) is 
 	procedure Initialiser(E : in out Etat) is
-		Row : Integer;
-		Column : Integer;
+		Row : Integer :=1;
+		Column : Integer :=1;
 	begin
 		for Column in 1..boardGameWidth loop
 			--Etp(Row)=0;
@@ -272,8 +272,8 @@ package body puissance4 is
 					else 
 						Sign := signPlayer2;
 					end if;
-					CoupPossible := new CelluleC(Sign, Row, Column);
-					L.Insere_Tete(CoupPossible, L);
+					CoupPossible := new CelluleC'(Sign, Row, Column);
+					Liste_Coups.Insere_Tete(CoupPossible, L);
 				else 
 					Put("The column ");
 					Put(Integer'Image(Column));
@@ -284,9 +284,9 @@ package body puissance4 is
 		return L;
 	end Coups_Possibles;
 
-	function Eval ( E : Etat ) return Integer is 
-	begin	
-	end Eval;
+	--function Eval ( E : Etat ) return Integer is 
+	--begin	
+	--end Eval;
 
 
 end puissance4;

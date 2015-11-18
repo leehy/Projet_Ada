@@ -1,0 +1,104 @@
+V "GNAT Lib v4.6"
+M P W=b
+P SS ZX
+R nnnvnnnnnnvnnnnvnnnnnvnnnvvnnnnvnnnnnvnnnnnnvnnnnnnnnnnnnnvnnnnnnnnnnnnnnnnnnnnn
+
+U main2joueurs%b	main2joueurs.adb	09332156 NE OO SU
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.integer_text_io%s	a-inteio.ads		a-inteio.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W ada.unchecked_deallocation%s
+W liste_generique%s	liste_generique.adb	liste_generique.ali
+W participant%s		participant.adb		participant.ali
+W partie%s		partie.adb		partie.ali
+W puissance4%s		puissance4.adb		puissance4.ali
+W system%s		system.ads		system.ali
+W system.concat_2%s	s-conca2.adb		s-conca2.ali
+W system.concat_4%s	s-conca4.adb		s-conca4.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.img_char%s	s-imgcha.adb		s-imgcha.ali
+W system.img_int%s	s-imgint.adb		s-imgint.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20090727140100 0c711ac9
+D a-finali.ads		20090409150019 e5e85fa4
+D a-filico.ads		20090409150019 872dc219
+D a-inteio.ads		20070406091342 f64b89a4
+D a-ioexce.ads		20091130110856 8b9de6cd
+D a-stream.ads		20090409150019 2ca4ee37
+D a-string.ads		20070406091342 90ac6797
+D a-tags.ads		20101021101406 c7695348
+D a-textio.ads		20091028140912 386df5d4
+D a-tiinio.ads		20090409150019 aa04e5d6
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-uncdea.ads		20070406091342 f15a5ed1
+D interfac.ads		20090409150019 f77d8799
+D i-cstrea.ads		20100622165701 1bd72c32
+D liste_generique.ads	20151025180743 d0d4d811
+D liste_generique.adb	20151108205754 dd01fb8a
+D main2joueurs.adb	20151118144315 25340249
+D participant.ads	20151108142348 d33efd3c
+D partie.ads		20151118143928 737254f8
+D partie.adb		20151118143922 7b1ec615
+D puissance4.ads	20151118144051 92b92eba
+D puissance4.adb	20151118144358 05d063f5
+D system.ads		20120503154647 23e1f70b
+D s-conca2.ads		20090420091404 fbd0f2fc
+D s-conca4.ads		20090420091404 025fe3be
+D s-crtl.ads		20100617122610 ac77b159
+D s-exctab.ads		20090417131547 66e51330
+D s-ficobl.ads		20100909103250 443b9d66
+D s-finimp.ads		20090409150019 46853fe8
+D s-finroo.ads		20090409150019 dbb860c9
+D s-imgcha.ads		20101008123408 9c3458e7
+D s-imgint.ads		20090409150019 02dbe0c2
+D s-parame.ads		20091130110856 9c5d83fa
+D s-secsta.ads		20090707124243 eea35a36
+D s-soflin.ads		20090729085153 9414c974
+D s-stache.ads		20090417130712 596fc1b4
+D s-stalib.ads		20101021102512 c4241c00
+D s-stoele.ads		20090417130712 facd7d98
+D s-stoele.adb		20100617152355 afc5dc80
+D s-stratt.ads		20100909123135 aedef97e
+D s-traent.ads		20090417130712 5221ee41
+D s-unstyp.ads		20090409150019 6ae15c76
+D s-wchcon.ads		20090417130712 bfeb2e3d
+X 1 ada.ads
+16K9*Ada 19e8 18|1r6 2r6 9r5 10r5
+X 5 a-inteio.ads
+18K13*Integer_Text_IO[11|45] 18|2w10 10r9
+X 10 a-textio.ads
+49K13*Text_IO 472e16 18|1w10 9r9
+264U14*Put_Line 18|34s4 35s4 36s4 37s4
+X 16 liste_generique.ads
+15k9*liste_Generique 63e20 18|6w6
+X 18 main2joueurs.adb
+13U11*Main2Joueurs 13b11 42l5 42t17
+15K12 MyPuissance4[22|17] 18r35 19r35 22r35 23r35 24r35 25r35 26r35 27r35
+. 28r35 31r7 39r4
+18K12 MyPartie[20|30] 29r8
+31a4 P{22|19A14[15]} 39m29 41m16
+X 19 participant.ads
+6K9*Participant 18|4w6 11r5 19|13e16
+8n30*Joueur2{8E10} 18|41r19
+X 20 partie.ads
+30k9*Partie 18|5w6 18r28 20|38e11
+36U15 Joue_Partie 18|41s4[18]
+X 22 puissance4.ads
+17k9*puissance4 18|3w6 15r32 22|63e15
+19A14 Etat(character) 18|18r48[15] 31r20[15]
+21R14 CelluleC
+29P14 Coup(21R14[18|15]) 18|19r48[15]
+32V14 Etat_Suivant{19A14[18|15]} 18|22r48[15]
+34V14 Est_Gagnant{boolean} 18|23r48[15]
+36V14 Est_Nul{boolean} 18|24r48[15]
+38U15 Affiche_Jeu 18|25r48[15]
+40U15 Affiche_Coup 18|26r48[15]
+42V14 Coup_Joueur1{29P14[18|15]} 18|27r48[15]
+44V14 Coup_Joueur2{29P14[18|15]} 18|28r48[15]
+46U19 Initialiser 18|39s17[15]
+

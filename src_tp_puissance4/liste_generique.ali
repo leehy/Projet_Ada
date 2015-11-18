@@ -25,7 +25,7 @@ D a-uncdea.ads		20070406091342 f15a5ed1
 D interfac.ads		20090409150019 f77d8799
 D i-cstrea.ads		20100622165701 1bd72c32
 D liste_generique.ads	20151025180743 d0d4d811
-D liste_generique.adb	20151025182504 dd01fb8a
+D liste_generique.adb	20151108205754 dd01fb8a
 D system.ads		20120503154647 23e1f70b
 D s-crtl.ads		20100617122610 ac77b159
 D s-exctab.ads		20090417131547 66e51330

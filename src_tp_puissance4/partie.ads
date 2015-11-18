@@ -23,7 +23,9 @@ generic
     -- Retourne le prochaine coup joue par le joueur1
     with function Coup_Joueur1(E : Etat) return Coup;
     -- Retourne le prochaine coup joue par le joueur2   
-    with function Coup_Joueur2(E : Etat) return Coup;   
+    with function Coup_Joueur2(E : Etat) return Coup;  
+	-- Initialisation du plateau
+	--with procedure Initialiser(E:in out Etat); 
     
 package Partie is
    
