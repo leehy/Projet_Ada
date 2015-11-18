@@ -12,6 +12,7 @@ with Participant; use Participant;
 	JBis : Joueur;
 	
 	begin
+	while Est_Gagnant(E,J) = false and Est_Nul(E) = false loop
 	Affiche_Jeu(E);
 	--T'as pas besoin d'initialiser car ça se fait deja dans le main2joueur 
 
@@ -30,7 +31,7 @@ with Participant; use Participant;
 		E := Etat_Suivant(E,Coup2);
 	end if; 
 	
-	Affiche_Jeu(E); --On affiche le nouveau quadrillage du jeu
+	--Affiche_Jeu(E); --On affiche le nouveau quadrillage du jeu
 
 	
 	if Est_Gagnant(E,J) then
@@ -43,7 +44,7 @@ with Participant; use Participant;
 	end if;
 	
 	if Est_Nul(E) then
-		Put_Line("Match Nul!");
+		Put_Line("Match Nul !");
 	end if;
 	
 	if (J=Joueur1) then JBis := Joueur2;
@@ -51,6 +52,6 @@ with Participant; use Participant;
 	end if;
 	
 	Joue_Partie(E, JBis);
-
+	end loop;
     end Joue_Partie;
 end Partie;

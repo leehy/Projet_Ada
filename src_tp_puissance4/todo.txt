@@ -1,0 +1,5 @@
+* Gérer le cas où on déborde du tableau
+* Gérer le bug d'un changement de signe perpétuel
+* Implémenter les fonctions Eval, et les fonctions dans moteur_jeu
+* Gérer le while dans Joue_Partie pour que lorsqu'il y a est_gagnant ou est_nul la partie s'arrête
+* Débuguer le match nul

@@ -2,7 +2,7 @@ V "GNAT Lib v4.6"
 P SS ZX
 R nnnvnnnnnnvnnnnvnnnnnnnnnvnnnnnvnnnnnnnnnnnnvnnnnnnnnnnnnnvnnnnnnnnnnnnnnnnnnnnn
 
-U puissance4%b		puissance4.adb		7cf0cf6f NE OO PK GE IL
+U puissance4%b		puissance4.adb		26d1f1c7 NE OO PK GE IL
 W ada%s			ada.ads			ada.ali
 W ada.integer_text_io%s	a-inteio.ads		a-inteio.ali
 W ada.strings%s		a-string.ads		a-string.ali
@@ -37,7 +37,7 @@ D liste_generique.ads	20151025180743 d0d4d811
 D liste_generique.adb	20151108205754 dd01fb8a
 D participant.ads	20151108142348 d33efd3c
 D puissance4.ads	20151118144051 92b92eba
-D puissance4.adb	20151118150221 63fd070e
+D puissance4.adb	20151118152354 39dc39a6
 D system.ads		20120503154647 23e1f70b
 D s-crtl.ads		20100617122610 ac77b159
 D s-exctab.ads		20090417131547 66e51330
@@ -80,16 +80,16 @@ X 18 participant.ads
 8E10*Joueur 8e38 19|34r40 52r51 20|21r40 259r48
 8n21*Joueur1{8E10} 20|31r24 271r48
 X 19 puissance4.ads
-9e9 signPlayer1{character} 20|32r33 198r63 272r57
-10e9 signPlayer2{character} 20|34r33 235r63 274r57
-11e9 signEmptyCase{character} 20|137r53 191r85 197r53 228r85 234r53 253r49
+9e9 signPlayer1{character} 20|32r33 235r63 272r57
+10e9 signPlayer2{character} 20|34r33 198r63 274r57
+11e9 signEmptyCase{character} 20|137r54 191r85 197r53 228r85 234r53 253r49
 . 267r85
 12i9 nbCheckersToWin{integer} 20|45r59 63r59 73r47 75r57 92r75 102r49 104r52
 . 121r75
 13i9 boardGameWidth{integer} 61r32 20|38r34 58r42 75r42 83r93 102r34 112r93
-. 137r35 146r32 150r34 157r42 185r51 187r51 222r51 224r51 250r34 266r34
+. 136r31 146r32 150r34 157r42 185r51 187r51 222r51 224r51 250r34 266r34
 14i9 boardGameHeight{integer} 61r50 20|40r39 56r31 73r31 83r122 104r36 104r73
-. 136r31 155r39 191r45 195r42 228r45 232r42 252r39 267r45 270r42
+. 137r35 155r39 191r45 195r42 228r45 232r42 252r39 267r45 270r42
 17k9*puissance4 9z9 10z9 11z9 12z9 13z9 14z9 63l5 63e15 20|6b14 293l5 293t15
 19A14*Etat(character) 32r31 32r54 34r30 36r26 38r31 42r31 44r31 46r40 52r40
 . 61c14 20|9r31 9r54 12r31 21r30 132r26 145r31 172r31 209r31 246r42 259r38

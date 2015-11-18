@@ -133,8 +133,8 @@ package body puissance4 is
 		Row : Integer:=1;
 	begin
 		-- on ne va verifier que la ligne tout en haut pour economiser des operations
-		for Row in 1..boardGameHeight loop
-			if E(Row, boardGameWidth) = signEmptyCase then
+		for Row in 1..boardGameWidth loop
+			if E(Row, boardGameHeight) = signEmptyCase then
 				return false;
 			end if;
 		end loop;
@@ -183,9 +183,9 @@ package body puissance4 is
 			Ada.Integer_Text_IO.Get(Column);
 
 			if Column < 1 or Column > boardGameWidth then
-				Put("The value must be between 1 and ");
+				Put("The value must be between 1 and");
 				Put(Integer'Image(boardGameWidth));
-				Put_Line("Please try again");
+				Put_Line(" Please try again");
 			else
 				Row := 1;
 				while Row < boardGameHeight+1 and E(Row, Column) /= signEmptyCase loop
@@ -195,7 +195,7 @@ package body puissance4 is
 				if Row > boardGameHeight then 
 					Put_Line("This column is already full, please try again");
 				elsif E(Row,Column)=signEmptyCase then
-					Play := new CelluleC'(signPlayer1, Column, Row);
+					Play := new CelluleC'(signPlayer2, Column, Row);
 					isValid:=true;
 				else 
 					Put_Line("There is an error");	
@@ -232,7 +232,7 @@ package body puissance4 is
 				if Row > boardGameHeight then 
 					Put_Line("This column is already full, please try again");
 				elsif E(Row,Column)=signEmptyCase then
-					Play := new CelluleC'(signPlayer2, Column, Row);
+					Play := new CelluleC'(signPlayer1, Column, Row);
 					isValid:=true;
 				else 
 					Put_Line("There is an error");	
