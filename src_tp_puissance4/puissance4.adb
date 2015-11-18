@@ -19,11 +19,17 @@ package body puissance4 is
 
     -- Indique si l'etat courant est gagnant pour le joueur J
     function Est_Gagnant(E : Etat; J : Joueur) return Boolean is 
+		-- Pour parcourir les lignes du plateau de jeu
 		Row: Integer:=1;
+		-- Pour parcourir les lignes quand il faudra voir s'il y a un Est_Gagnant en diagonale
 		RowDiag : Integer:=1;
+		-- Pour parcourir les colonnes du plateau de jeu
 		Column : Integer:=1;
+		-- Pour parcourir les colonnes quand il faudra voir s'il y a un Est_Gagnant en diagonale
 		ColumnDiag : Integer:=1 ;
+		-- Compteur pour voir combien il y a de pions aligne a la suite 
 		num_checkers_aligned : Integer:=0;
+		-- Assignation des signes pour les joueurs
 		sign : Character;
 		
 	begin
@@ -133,6 +139,7 @@ package body puissance4 is
 		Row : Integer:=1;
 	begin
 		-- on ne va verifier que la ligne tout en haut pour economiser des operations
+		-- S'il reste une case vide, retourne false, sinon retourne true
 		for Row in 1..boardGameWidth loop
 			if E(Row, boardGameHeight) = signEmptyCase then
 				return false;
@@ -146,12 +153,14 @@ package body puissance4 is
 		Row : Integer:=boardGameWidth;	
 		Column : Integer:=1;
 	begin 
+		-- On affiche des indicateurs de colonnes
 		Put("|");
 		for Column in 1..boardGameWidth loop
 			Put(Integer'Image(Column) & " |");
 		end loop;
 		Put_Line("");
 
+		-- On parcourt le tableau pour afficher les éléments à la bonne place
 		for Row in reverse 1..boardGameHeight loop
 			Put("|");
 			for Column in 1..boardGameWidth loop
@@ -179,20 +188,24 @@ package body puissance4 is
 		while isValid = false loop
 			Put_Line("It's time for number 1 to play");
 			Put_Line("Select the Row number where you want to play");
-
+			-- On récupère la valeur tapée par l'utilisateur dans column
 			Ada.Integer_Text_IO.Get(Column);
-
+			-- Traitement du cas où la valeur retournée est en dehors des valeurs du tableau de jeu
 			if Column < 1 or Column > boardGameWidth then
 				Put("The value must be between 1 and");
 				Put(Integer'Image(boardGameWidth));
 				Put_Line(" Please try again");
+
 			else
 				Row := 1;
+				-- On parcours les lignes pour arriver à l'endroit où il y a une case vide
 				while Row < boardGameHeight+1 and E(Row, Column) /= signEmptyCase loop
 					Row := Row + 1;
 				end loop;  
 
-				if Row > boardGameHeight then 
+				-- Si on est à la dernière ligne ou plus, on renvoie un message d'erreur
+				-- ne marche pas car il y a un raised constraint error
+				if Row >= boardGameHeight then 
 					Put_Line("This column is already full, please try again");
 				elsif E(Row,Column)=signEmptyCase then
 					Play := new CelluleC'(signPlayer2, Column, Row);
@@ -206,6 +219,7 @@ package body puissance4 is
 	end Coup_Joueur1;
 
     -- Retourne le prochain coup joue par le joueur2   
+	-- La même chose que pour joueur 1
     function Coup_Joueur2(E : Etat) return Coup is
 	Play : Coup;
 		isValid : Boolean := false;
