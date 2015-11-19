@@ -32,6 +32,7 @@ package body puissance4 is
 		-- Assignation des signes pour les joueurs
 		sign : Character;
 		
+		
 	begin
 		-- On assigne les signes aux joueurs pour pouvoir compter le nombre de signes côte à côte
 		if J = Joueur1 then
@@ -39,6 +40,16 @@ package body puissance4 is
 		else 
 			sign := signPlayer2;
 		end if; 
+
+		
+		for Column in 1..boardGameWidth loop
+			Row := 1;
+			while Row < boardGameHeight + 1 and f loop
+				Row := Row + 1;
+			end loop
+
+			-- traitement du cas d'une victoire verticale
+		end loop;
 
 		-- traitement du cas d'une victoire verticale
 		for Column in 1..boardGameWidth loop
@@ -228,7 +239,7 @@ package body puissance4 is
 	begin
 
 		while isValid = false loop
-			Put_Line("It's time for number 1 to play");
+			Put_Line("It's time for number 2 to play");
 			Put_Line("Select the Row number where you want to play");
 
 			Ada.Integer_Text_IO.Get(Column);
