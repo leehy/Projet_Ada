@@ -41,16 +41,6 @@ package body puissance4 is
 			sign := signPlayer2;
 		end if; 
 
-		
-		for Column in 1..boardGameWidth loop
-			Row := 1;
-			while Row < boardGameHeight + 1 and f loop
-				Row := Row + 1;
-			end loop
-
-			-- traitement du cas d'une victoire verticale
-		end loop;
-
 		-- traitement du cas d'une victoire verticale
 		for Column in 1..boardGameWidth loop
 			num_checkers_aligned := 0;
