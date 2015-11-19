@@ -137,12 +137,13 @@ package body puissance4 is
 
     -- Indique si l'etat courant est un status quo (match nul)
     function Est_Nul(E : Etat) return Boolean is 
-		Row : Integer:=1;
+		Row : Integer:=boardGameHeight;
+		Column : Integer :=1;
 	begin
 		-- on ne va verifier que la ligne tout en haut pour economiser des operations
 		-- S'il reste une case vide, retourne false, sinon retourne true
-		for Row in 1..boardGameWidth loop
-			if E(Row, boardGameHeight) = signEmptyCase then
+		for Column in 1..boardGameWidth loop
+			if E(Row, Column) = signEmptyCase then
 				return false;
 			end if;
 		end loop;
@@ -184,13 +185,24 @@ package body puissance4 is
 		isValid : Boolean := false;
 		Row : Integer;
 		Column : Integer;
+		--Type ArrayOfCheckers is array(1..boardGameWidth) of Integer ;
+		--CheckersFull : ArrayOfCheckers ;
+		--IndexArray : Integer;
 	begin
+
+		--for IndexArray in 1..boardGameWidth loop
+		--	CheckersFull(IndexArray) := 0;
+		--end loop;
 
 		while isValid = false loop
 			Put_Line("It's time for number 1 to play");
 			Put_Line("Select the Row number where you want to play");
+
 			-- On récupère la valeur tapée par l'utilisateur dans column
+			
 			Ada.Integer_Text_IO.Get(Column);
+			
+			
 			-- Traitement du cas où la valeur retournée est en dehors des valeurs du tableau de jeu
 			if Column < 1 or Column > boardGameWidth then
 				Put("The value must be between 1 and");
@@ -200,60 +212,81 @@ package body puissance4 is
 			else
 				Row := 1;
 				-- On parcours les lignes pour arriver à l'endroit où il y a une case vide
-				while Row < boardGameHeight+1 and E(Row, Column) /= signEmptyCase loop
+				while Row < boardGameHeight and E(Row, Column) /= signEmptyCase loop
 					Row := Row + 1;
 				end loop;  
-
+				--if Row = boardGameHeight+1 then
+				--	Put_Line("teeestcamerereefss");
+				--end if;
 				-- Si on est à la dernière ligne ou plus, on renvoie un message d'erreur
 				-- ne marche pas car il y a un raised constraint error
-				if Row >= boardGameHeight then 
-					Put_Line("This column is already full, please try again");
-				elsif E(Row,Column)=signEmptyCase then
-					Play := new CelluleC'(signPlayer2, Column, Row);
-					isValid:=true;
-				else 
-					Put_Line("There is an error");	
-				end if;
-			end if;
-		end loop;
-		return Play;
-	end Coup_Joueur1;
-
-    -- Retourne le prochain coup joue par le joueur2   
-	-- La même chose que pour joueur 1
-    function Coup_Joueur2(E : Etat) return Coup is
-	Play : Coup;
-		isValid : Boolean := false;
-		Row : Integer;
-		Column : Integer;
-	begin
-
-		while isValid = false loop
-			Put_Line("It's time for number 2 to play");
-			Put_Line("Select the Row number where you want to play");
-
-			Ada.Integer_Text_IO.Get(Column);
-
-			if Column < 1 or Column > boardGameWidth then
-				Put("The value must be between 1 and ");
-				Put(Integer'Image(boardGameWidth));
-				Put_Line("Please try again");
-			else
-				Row := 1;
-				while Row < boardGameHeight+1 and E(Row, Column) /= signEmptyCase loop
-					Row := Row + 1;
-				end loop;  
-
 				if Row > boardGameHeight then 
 					Put_Line("This column is already full, please try again");
 				elsif E(Row,Column)=signEmptyCase then
 					Play := new CelluleC'(signPlayer1, Column, Row);
 					isValid:=true;
 				else 
-					Put_Line("There is an error");	
+					Put_Line("This column is not available, please try again");	
 				end if;
 			end if;
 		end loop;
+
+		return Play;
+	end Coup_Joueur1;
+
+    -- Retourne le prochain coup joue par le joueur2   
+	-- La même chose que pour joueur 1
+    function Coup_Joueur2(E : Etat) return Coup is
+		Play : Coup;
+		isValid : Boolean := false;
+		Row : Integer;
+		Column : Integer;
+		--Type ArrayOfCheckers is array(1..boardGameWidth) of Integer ;
+		--CheckersFull : ArrayOfCheckers ;
+		--IndexArray : Integer;
+	begin
+
+		--for IndexArray in 1..boardGameWidth loop
+		--	CheckersFull(IndexArray) := 0;
+		--end loop;
+
+		while isValid = false loop
+			Put_Line("It's time for number 2 to play");
+			Put_Line("Select the Row number where you want to play");
+
+			-- On récupère la valeur tapée par l'utilisateur dans column
+			
+			Ada.Integer_Text_IO.Get(Column);
+			
+			
+			-- Traitement du cas où la valeur retournée est en dehors des valeurs du tableau de jeu
+			if Column < 1 or Column > boardGameWidth then
+				Put("The value must be between 1 and");
+				Put(Integer'Image(boardGameWidth));
+				Put_Line(" Please try again");
+
+			else
+				Row := 1;
+				-- On parcours les lignes pour arriver à l'endroit où il y a une case vide
+				while Row < boardGameHeight and E(Row, Column) /= signEmptyCase loop
+					Row := Row + 1;
+				end loop;  
+				--if Row = boardGameHeight+1 then
+				--	Put_Line("teeestcamerereefss");
+				--end if;
+				-- Si on est à la dernière ligne ou plus, on renvoie un message d'erreur
+				-- ne marche pas car il y a un raised constraint error
+				if Row > boardGameHeight then 
+					Put_Line("This column is already full, please try again");
+				elsif E(Row,Column)=signEmptyCase then
+					Play := new CelluleC'(signPlayer2, Column, Row);
+					isValid:=true;
+				else 
+					Put_Line("This column is not available, please try again");	
+				end if;
+			end if;
+		end loop;
+
 		return Play;
 	end Coup_Joueur2;
 
