@@ -9,18 +9,19 @@ package body Moteur_Jeu is
     function Choix_Coup(E : Etat) return Coup is 
 		LCoups_Possible : Liste_Coups.Liste;
 		LCoups_Max : Liste_Coups.Liste;
-		Coup_Retourne : Coup;
 		It_Possible : Liste_Coups.Iterateur;
 		It_Max : Liste_Coups.Iterateur;
 		Val_Max : Integer ; -- Poids le plus elevé
 		Val_Tmp : Integer ; 
 		Profondeur : Natural := P;
 		TailleDeListe : Integer;
-   		type Numero is range 0 .. 100;
-    	package Choix_Coup is new Ada.Numerics.Discrete_Random (Numero);
-    	use Choix_Coup;    -- Rend Generator, Reset et Random visibles
-    	A : Numero;
+		IndexListe : Integer := 0;
+   		subtype Numero is Integer range 0 .. 50;
+    	package Coup_Aleatoire is new Ada.Numerics.Discrete_Random (Numero);
+    	use Coup_Aleatoire;    -- Rend Generator, Reset et Random visibles
     	G : Generator;
+		Val : Integer := 1;
+		Coup_Retourne : Coup;
 
 	begin
 
@@ -40,6 +41,8 @@ package body Moteur_Jeu is
 				Liste_Coups.Libere_Iterateur(It_Possible);
 				Liste_Coups.Insere_Tete(Liste_Coups.Element_Courant(It_Possible), LCoups_Max);	
 				TailleDeListe := 1 ;	
+			-- if Val_Tmp < Val_Max
+			-- Il ne se passe rien
 			elsif Val_Tmp = Val_Max then
 				Liste_Coups.Insere_Tete(Liste_Coups.Element_Courant(It_Possible), LCoups_Max);
 				TailleDeListe:= TailleDeListe + 1;
@@ -48,10 +51,15 @@ package body Moteur_Jeu is
 		end loop;
 	
 		Reset (G);          -- Initialise le générateur (à faire une seule fois)
-    	A := Random (G);    -- Tire un nombre au hasard entre 0 et 100
-    	--Ada.Text_IO.Put_Line ("Le numéro est: " & Numero'Image (A));
-		Coup_Retourne := Liste_Coups.Element_Courant(It_Possible);
+    	Val := Random (G);    -- Tire un nombre au hasard entre 0 et 50
+		Val := Val mod TailleDeListe;
+		
+		while Liste_Coups.A_Suivant(It_Max) and Val>0 loop
+			Val := Val-1;
+			Liste_Coups.Suivant(It_Max);
+		end loop;
 
+		Coup_retourne:=Liste_Coups.Element_Courant(It_Max);
 
 		Liste_Coups.Libere_Iterateur(It_Possible);
 		Liste_Coups.Libere_Liste(LCoups_Possible);
