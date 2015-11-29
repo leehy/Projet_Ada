@@ -338,9 +338,59 @@ package body puissance4 is
 		return L;
 	end Coups_Possibles;
 
-	--function Eval ( E : Etat ) return Integer is 
-	--begin	
-	--end Eval;
+	function Eval (E : Etat) return Integer is 
+	-- Pour parcourir les lignes du plateau de jeu
+		Row: Integer:=1;
+		-- Pour parcourir les lignes quand il faudra voir s'il y a un Est_Gagnant en diagonale
+		RowDiag : Integer:=1;
+		-- Pour parcourir les colonnes du plateau de jeu
+		Column : Integer:=1;
+		-- Pour parcourir les colonnes quand il faudra voir s'il y a un Est_Gagnant en diagonale
+		ColumnDiag : Integer:=1 ;
+		-- Compteur pour voir combien il y a de pions alignes a la suite 
+		num_checkers_aligned : Integer:=0;
+		-- Assignation des signes pour les joueurs
+		sign : Character;
+		-- Liste de coups possibles
+		LCoups_Possible : Liste_Coups.Liste;
+		-- Iterateur associe à LCoups
+		It_Possible : Liste_Coups.Iterateur;
+
+	begin	
+		-- On assigne les signes aux joueurs pour pouvoir compter le nombre de signes côte à côte et on donne la liste de coups possibles
+		if J = Joueur1 then
+			sign := signPlayer1;
+			LCoups_Possible := Coups_Possibles(E, Joueur1);
+			It_Possible := Liste_Coups.Creer_Iterateur(LCoups_Possible);
+		else 
+			sign := signPlayer2;
+			LCoups_Possible := Coups_Possibles(E, Joueur2);
+			It_Possible := Liste_Coups.Creer_Iterateur(LCoups_Possible);
+		end if; 
+		
+		while Liste_Coups.A_Suivant(It_Possible) loop
+			Column : Liste_Coups.Element_Courant(It_Possible).numColumn;
+			-- traitement du cas d'une victoire verticale
+			-- on parcourt le plateau entier
+				num_checkers_aligned := 1;
+				-- on ne va parcourir le plateau dans le sens vertical du pion 1 au pion 7-4+1= 4 car cela suffit à atteindre toutes les pièces du plateau
+				for Row in 1..boardGameHeight loop
+					-- si le signe correspond à celui du joueur J, on incrémente le nombre de pièces
+					if E(Row, Column)= sign then
+						num_checkers_aligned := num_checkers_aligned + 1;
+					end if;
+					-- si le nombre de pièce est égal à aux nombres de pièces pour gagner la partie, on retourne vrai
+					if num_checkers_aligned = nbCheckersToWin then
+						return 100;
+					end if;
+					-- si le signe ne correspond pas à celui du joueur J, on remet là valeur de num_checkers_aligned à 1
+					if E(Row, Column) /= sign then
+						num_checkers_aligned := 1;
+					end if;
+					return num_checkers_aligned
+				end loop;
+		end loop;
+	end Eval;
 
 
 end puissance4;
