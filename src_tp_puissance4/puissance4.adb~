@@ -308,7 +308,7 @@ package body puissance4 is
 		end loop;
 
 	end Initialiser;
-	
+
 	function Coups_Possibles(E : Etat; J : Joueur) return Liste_Coups.Liste is
 		Row : Integer:=1;
 		Column : Integer:=1;

@@ -33,7 +33,7 @@ D liste_generique.ads	20151025180743 d0d4d811
 D liste_generique.adb	20151108205754 dd01fb8a
 D participant.ads	20151108142348 d33efd3c
 D partie.ads		20151118143928 737254f8
-D partie.adb		20151118151527 3c21daf8
+D partie.adb		20151119175652 3c21daf8
 D system.ads		20120503154647 23e1f70b
 D s-crtl.ads		20100617122610 ac77b159
 D s-exctab.ads		20090417131547 66e51330

@@ -26,19 +26,20 @@ generic
     -- Indique le joueur interprete par le moteur
     JoueurMoteur : Joueur;
     
-package Moteur_Jeu is
+--package Moteur_Jeu is
     
     -- Choix du prochain coup par l'ordinateur. 
     -- E : l'etat actuel du jeu;
     -- P : profondeur a laquelle la selection doit s'effetuer
     --function Choix_Coup(E : Etat) return Coup;
    
-private 
+--private 
     -- Evaluation d'un coup a partir d'un etat donne
-    --E : Etat courant
+    -- E : Etat courant
     -- P : profondeur a laquelle cette evaluation doit etre realisee
     -- C : Coup a evaluer
     -- J : Joueur qui realise le coup
-    function Eval_Min_Max(E : Etat; P : Natural; C : Coup; J : Joueur) return Integer;
+    --function Eval_Min_Max(E : Etat; P : Natural; C : Coup; J : Joueur)
+    --    return Integer;
    
 --end Moteur_Jeu;
