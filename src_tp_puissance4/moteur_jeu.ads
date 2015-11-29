@@ -30,8 +30,8 @@ package Moteur_Jeu is
     
     -- Choix du prochain coup par l'ordinateur. 
     -- E : l'etat actuel du jeu;
-    -- P : profondeur a laquelle la selection doit s'effetuer
-    --function Choix_Coup(E : Etat) return Coup;
+    -- P : profondeur a laquelle la selection doit s'effectuer
+    function Choix_Coup(E : Etat) return Coup;
    
 private 
     -- Evaluation d'un coup a partir d'un etat donne
@@ -39,6 +39,6 @@ private
     -- P : profondeur a laquelle cette evaluation doit etre realisee
     -- C : Coup a evaluer
     -- J : Joueur qui realise le coup
-    function Eval_Min_Max(E : Etat; P : Natural; C : Coup; J : Joueur) return Integer;
+    function Eval_Min_Max(E : Etat; P : Natural; J : Joueur) return Integer;
    
---end Moteur_Jeu;
+end Moteur_Jeu;
