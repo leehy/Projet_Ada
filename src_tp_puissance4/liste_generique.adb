@@ -58,7 +58,7 @@ package body liste_Generique is
 		if L = null then
 			It := new Iterateur_Interne'(NULL, NULL);
 		else 
-			It := new Iterateur_Interne'(It.Cour, It.Suivant);
+			It := new Iterateur_Interne'(L, L.Suiv);
 		end if;
 		return It;
 	end Creer_Iterateur;

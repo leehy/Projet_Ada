@@ -30,12 +30,12 @@ package body Moteur_Jeu is
 		-- On lui associe un iterateur
 		It_Possible := Liste_Coups.Creer_Iterateur(LCoups_Possible);
 		
-		Val_Max := Eval_Min_Max(E,Profondeur, JoueurMoteur); --Liste_Coups.Element_Courant(It_Possible),
+		Val_Max := Eval_Min_Max(E,Profondeur, Liste_Coups.Element_Courant(It_Possible), JoueurMoteur); --Liste_Coups.Element_Courant(It_Possible),
 		Liste_Coups.Insere_Tete(Liste_Coups.Element_Courant(It_Max), LCoups_Max);
 		TailleDeListe := 1; 
 
 		while Liste_Coups.A_Suivant(It_Possible) loop
-			Val_Tmp := Eval_Min_Max(E,Profondeur, JoueurMoteur); --Liste_Coups.Element_Courant(It_Possible),
+			Val_Tmp := Eval_Min_Max(E,Profondeur,Liste_Coups.Element_Courant(It_Possible), JoueurMoteur); --Liste_Coups.Element_Courant(It_Possible),
 			if Val_Tmp > Val_Max then
 				Val_Max := Val_Tmp;
 				Liste_Coups.Libere_Iterateur(It_Possible);
@@ -68,7 +68,7 @@ package body Moteur_Jeu is
 		return Coup_Retourne;		
 	end Choix_Coup;
 
-	function Eval_Min_Max(E : Etat; P : Natural; J : Joueur) return Integer is
+	function Eval_Min_Max(E : Etat; P : Natural; C : Coup; J : Joueur) return Integer is
 	
 	INFINITY : Integer := 9999;
 	tmp : Integer;
@@ -93,18 +93,22 @@ package body Moteur_Jeu is
 		
 	if(J = Joueur1) --On fait l'hypothèse que l'ordinateur est Joueur1
 		then	
+		 
+		if (P=0) then return eval(E); end if;
+		
+		Et := Etat_Suivant(Et, C);
 		valMax := -INFINITY;
-		LcoupsPossibles := Coups_Possibles(E,J);
+		LcoupsPossibles := Coups_Possibles(Et,J);
 		It_Possible := Liste_Coups.Creer_Iterateur(LcoupsPossibles); --added
 		--while LcoupsPossibles.Suiv /= NULL loop
 
-		while Liste_Coups.A_Suivant(It_Possible) loop
+			while Liste_Coups.A_Suivant(It_Possible) loop
 			--Choix_Coup(E);
-			--E := Etat_Suivant(E, Choix_Coup(E)); --on fait une simulation de coups pour chaque état successif du jeu
+			--E := Etat_Suivant(E, Choix_Coup(E)); --on fait une simulation de coups pour chaque état successif du jeu possibles
 			CoupJoue := Liste_Coups.Element_Courant(It_Possible);
-			Et := Etat_Suivant(Et, CoupJoue);
-			--possibles
-			tmp := Eval_Min_Max(Et, P-1, Joueur2);
+			--Et := Etat_Suivant(Et, C);
+
+			tmp := Eval_Min_Max(Et, P-1, CoupJoue, Joueur2);
 		
 			if (tmp > valMax) then
 				valMax := tmp;
@@ -116,8 +120,6 @@ package body Moteur_Jeu is
 		--Lsuiv := LcoupsPossibles.Suiv;
 		--Lsuiv := Lsuiv.Suiv;
 		--It_suivant := Liste_Coups.Suivant(It_Possible);
-		
-		
 		end loop;
 		
 		valFinale := valMax;
@@ -128,15 +130,19 @@ package body Moteur_Jeu is
 		
 	if (J = Joueur2) --On fait l'hypothèse que Joueur2 est l'adversaire de l'ordinateur
 		then
+		
+		if(P=0) then return eval(E); end if;	
+		
+		Et := Etat_Suivant(Et, C);
 		valMin := INFINITY;
-		LcoupsPossibles := Coups_Possibles(E,J);
+		LcoupsPossibles := Coups_Possibles(Et,J);
 		It_Possible := Liste_Coups.Creer_Iterateur(LcoupsPossibles);
 
-		while Liste_Coups.A_Suivant(It_Possible) loop
+			while Liste_Coups.A_Suivant(It_Possible) loop
 		
 			CoupJoue := Liste_Coups.Element_Courant(It_Possible);
-			Et := Etat_Suivant(Et, CoupJoue);
-			tmp := Eval_Min_Max(E, P-1, Joueur1);
+			--Et := Etat_Suivant(Et, CoupJoue);
+			tmp := Eval_Min_Max(E, P-1, CoupJoue, Joueur1);
 				
 			if (tmp < valMin) then
 				valMin := tmp;
@@ -147,9 +153,8 @@ package body Moteur_Jeu is
 			
 		--Lsuiv := LcoupsPossibles.Suiv;
 		--Lsuiv := Lsuiv.Suiv;
-		
-		end loop;
-		
+		end loop;		
+
 		valFinale := valMin;
 		
 		return valFinale;

@@ -51,7 +51,7 @@ package puissance4 is
 	-- Retourne la liste des coups possibles pour J a partir de l’etat
 	function Coups_Possibles ( E : Etat ; J : Joueur ) return Liste_Coups.Liste ;
 	-- Evaluation statique du jeu du point de vue de l ’ ordinateur
-	--function Eval ( E : Etat ) return Integer ;
+	function Eval ( E : Etat) return Integer ;
 
 private
 	-- Representation d'un tableau de compteur qui nous permettra d'obtenir la position du pion place au plus haut du jeu
