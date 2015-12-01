@@ -53,6 +53,7 @@ package puissance4 is
 	-- Evaluation statique du jeu du point de vue de l ’ ordinateur
 	function Eval ( E : Etat) return Integer ;
 
+
 private
 	-- Representation d'un tableau de compteur qui nous permettra d'obtenir la position du pion place au plus haut du jeu
 	--type EtatTopPion is array (1..boardGameWidth) of Integer;

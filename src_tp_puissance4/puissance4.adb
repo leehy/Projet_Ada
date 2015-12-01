@@ -46,7 +46,7 @@ package body puissance4 is
 		for Column in 1..boardGameWidth loop
 			num_checkers_aligned := 0;
 			-- on ne va parcourir le plateau dans le sens vertical du pion 1 au pion 7-4+1= 4 car cela suffit à atteindre toutes les pièces du plateau
-			for Row in 1..boardGameHeight -nbCheckersToWin + 1 loop
+			for Row in 1..boardGameHeight loop
 				-- si le signe correspond à celui du joueur J, on incrémente le nombre de pièces
 				if E(Row, Column)= sign then
 					num_checkers_aligned := num_checkers_aligned + 1;
@@ -66,7 +66,7 @@ package body puissance4 is
 		for Row in 1..boardGameHeight loop
 			num_checkers_aligned := 0;
 			-- on ne va parcourir le plateau dans le sens horizontal du pion 1 au pion 7-4+1= 4 car cela suffit à atteindre toutes les pièces du plateau
-			for Column in 1..boardGameWidth-nbCheckersToWin + 1 loop
+			for Column in 1..boardGameWidth loop
 				-- on effectue la même chose que pour le traitement de la victoire verticale
 				if E(Row,Column) = sign then 
 					num_checkers_aligned := num_checkers_aligned + 1;
@@ -339,16 +339,20 @@ package body puissance4 is
 	end Coups_Possibles;
 
 	function Eval (E : Etat) return Integer is 
-	-- Pour parcourir les lignes du plateau de jeu
+		-- Pour parcourir les lignes du plateau de jeu
 		Row: Integer:=1;
+		
 		-- Pour parcourir les lignes quand il faudra voir s'il y a un Est_Gagnant en diagonale
 		RowDiag : Integer:=1;
 		-- Pour parcourir les colonnes du plateau de jeu
 		Column : Integer:=1;
 		-- Pour parcourir les colonnes quand il faudra voir s'il y a un Est_Gagnant en diagonale
 		ColumnDiag : Integer:=1 ;
+		-- Pour parcourir les colonnes pour compter le nombre de pions
+		ColumnHori : Integer :=1;
 		-- Compteur pour voir combien il y a de pions alignes a la suite 
 		num_checkers_aligned1 : Integer:=0;
+		num_empty_case : Integer := 0;
 		Max_num_checkers_aligned1 : Integer := 0;
 		
 	begin	
@@ -371,14 +375,48 @@ package body puissance4 is
 				
 				-- si le signe ne correspond pas à celui du joueur J, on remet là valeur de num_checkers_aligned à 0
 				elsif E(Row, Column) /= signPlayer1 then
-					Max_num_checkers_aligned1 := num_checkers_aligned1;
+					Max_num_checkers_aligned1 := Integer'Max (Max_num_checkers_aligned1, num_checkers_aligned1);
 					num_checkers_aligned1 := 0;
 				end if;
 		end loop;
 
-		
+		-- traitement du cas d'une victoire horizontale
+
+		for Row in 1..boardGameHeight loop
+			-- Si le joueur 2 a un pion sur la colonne 4, il n'y peut pas avoir de situation avantageuse pour l'ordinateur : on passe à la ligne suivante
+			if E(Row,boardGameWidth-nbCheckersToWin+1)= signPlayer2 then
+				num_checkers_aligned1 := 0;
+			else
+				num_checkers_aligned1 := 0;
+				-- on ne va parcourir le plateau dans le sens horizontal du pion 1 au pion 7-4+1= 4 car cela suffit à atteindre toutes les pièces du plateau
+				for Column in 1..boardGameWidth loop
+					
+					if E(Row,Column) = signEmptyCase then
+						num_empty_case := num_empty_case + 1;
+					elsif E(Row,Column) = signPlayer1 then 
+						num_checkers_aligned1 := num_checkers_aligned1 + 1;
+					elsif E(Row, Column) = signPlayer2 then
+						if num_checkers_aligned1+num_empty_case >= nbCheckersToWin then 
+							Max_num_checkers_aligned1 := Integer'Max (Max_num_checkers_aligned1, num_checkers_aligned1);
+							num_checkers_aligned1 := 0;
+							num_empty_case := 0;
+						else
+							num_checkers_aligned1 := 0;
+							num_empty_case := 0;
+						end if;		
+					end if;
+
+				end loop;
+			end if;
+		end loop;
+		-- Code Samuel
+
+
+
+		--COde samuel
 		return Max_num_checkers_aligned1;
 	end Eval;
+
 
 
 end puissance4;
