@@ -287,6 +287,7 @@ package body puissance4 is
 		L : Liste_Coups.Liste;
 		Sign : Character;
 		CoupPossible : Coup;
+		Cpt : Integer:=0;
 	begin
 		for Column in 1..boardGameWidth loop
 				while Row < boardGameHeight+1 and E(Row, Column) /= signEmptyCase loop
@@ -300,12 +301,14 @@ package body puissance4 is
 					end if;
 					CoupPossible := new CelluleC'(Sign, Row, Column);
 					Liste_Coups.Insere_Tete(CoupPossible, L);
+					--Cpt := Cpt + 1 ;
+				--Put(Cpt);
+				--Put_Line("");
 				else 
 					Put("The column ");
 					Put(Integer'Image(Column));
 					Put(" is full");
 				end if;
-				
 		end loop;
 		return L;
 	end Coups_Possibles;
@@ -346,16 +349,17 @@ package body puissance4 is
 			while E(Row,Column) /= signEmptyCase loop
 				Row := Row + 1;
 			end loop;
+				if Row /=1 then
 				Row := Row - 1;
-				
+				end if;
 				-- si le signe correspond à celui du joueur J, on incrémente le nombre de pièces alignées de joueur 1
-				if E(Row, Column)= signPlayer1 and Row > 1 then
+				if E(Row, Column)= signPlayer1 and Row > 1 and Row < boardGameHeight then
 					while E(Row, Column) = signPlayer1 loop
 						num_checkers_aligned1 := num_checkers_aligned1 + 1;
 						Row := Row-1;
 					end loop;
 				-- si le signe correspond à celui du joueur J, on incrémente le nombre de pièces alignées de joueur 2
-				elsif E(Row, Column)= signPlayer2 and Row > 1 then 
+				elsif E(Row, Column)= signPlayer2 and Row > 1  and Row < boardGameHeight then 
 					num_checkers_aligned2 := num_checkers_aligned2 + 1;
 					while E(Row, Column) = signPlayer2 loop
 						num_checkers_aligned1 := num_checkers_aligned1 + 1;
@@ -370,6 +374,7 @@ package body puissance4 is
 					Row := 1;
 		end loop;
 
+		Put_Line("Test 1");
 		-- traitement du cas d'une victoire horizontale
 		for Row in 1..boardGameHeight loop
 			-- Si le joueur 2 a un pion sur la colonne 4, il n'y peut pas avoir de situation avantageuse pour l'ordinateur : on passe à la ligne suivante
@@ -457,6 +462,7 @@ package body puissance4 is
 			cout :=1000;
 			Put_Line("Il y a eu une erreur");
 		end if;
+		Put(cout);
 		return cout;
 	end Eval;
 end puissance4;

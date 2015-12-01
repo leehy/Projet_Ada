@@ -25,8 +25,23 @@ procedure Main2Joueurs is
 					  MyPuissance4.Eval,
 					  2,
 					  Joueur1);
-use MyMoteur_jeu;
-   -- definition d'une partie entre L'ordinateur en Joueur 1 et un humain en Joueur 2
+	use MyMoteur_jeu;
+
+   -- definition d'une partie entre un humain en Joueur 1 et un humain en Joueur 2
+   --package MyPartie is new Partie(MyPuissance4.Etat,
+	--			  MyPuissance4.Coup, 
+	--			  "Pierre",
+	--			  "Paul",
+	--			  MyPuissance4.Etat_Suivant,
+	--			  MyPuissance4.Est_Gagnant,
+	--			  MyPuissance4.Est_Nul,
+	--			  MyPuissance4.Affiche_Jeu,
+	--			  MyPuissance4.Affiche_Coup,
+				  --MyPuissance4.Coup_Joueur1,
+	--			  MyPuissance4.Coup_Joueur2);
+   --use MyPartie;
+
+	 -- definition d'une partie entre un humain en Joueur 1 et un humain en Joueur 2
    package MyPartie is new Partie(MyPuissance4.Etat,
 				  MyPuissance4.Coup, 
 				  "Pierre",
@@ -36,9 +51,8 @@ use MyMoteur_jeu;
 				  MyPuissance4.Est_Nul,
 				  MyPuissance4.Affiche_Jeu,
 				  MyPuissance4.Affiche_Coup,
-				  --MyPuissance4.Coup_Joueur1,
-				  MyMoteur_Jeu.Choix_Coup,
-				  MyPuissance4.Coup_Joueur2);
+					MyMoteur_jeu.Choix_Coup,
+			  	MyPuissance4.Coup_Joueur2);
    use MyPartie;
    
    P: MyPuissance4.Etat;

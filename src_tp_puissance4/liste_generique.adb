@@ -12,7 +12,7 @@ package body liste_Generique is
     procedure Affiche_Liste (L : in Liste) is 
 	Cour : Liste := L;
 	begin	
-		while Cour.Suiv /= NULL loop
+		while Cour /= NULL loop
 			Put(Cour.Val);
 			Put(" ");
 			Cour:= Cour.Suiv;
@@ -87,12 +87,11 @@ package body liste_Generique is
     -- Retourne l'element courant
     function Element_Courant(It : Iterateur) return Element is
 	begin
-		if It.Cour = NULL then
-			Put_Line("La liste est vide");
-		elsif A_Suivant(It) = false then
-			raise FinDeListe;
+		if It.Cour /= NULL then
+			return It.Cour.Val;
+		else 
+			raise Constraint_Error;
 		end if;
-		return It.Cour.Val;
 	end Element_Courant;
 
     -- Verifie s'il reste un element a parcourir
