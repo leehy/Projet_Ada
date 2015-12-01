@@ -355,7 +355,7 @@ package body puissance4 is
 						Row := Row-1;
 					end loop;
 				-- si le signe correspond à celui du joueur J, on incrémente le nombre de pièces alignées de joueur 2
-				elsif E(Row, Column)= signPlayer2 then 
+				elsif E(Row, Column)= signPlayer2 and Row > 1 then 
 					num_checkers_aligned2 := num_checkers_aligned2 + 1;
 					while E(Row, Column) = signPlayer2 loop
 						num_checkers_aligned1 := num_checkers_aligned1 + 1;
