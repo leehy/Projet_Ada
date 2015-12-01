@@ -190,23 +190,14 @@ package body puissance4 is
 		isValid : Boolean := false;
 		Row : Integer;
 		Column : Integer;
-		--Type ArrayOfCheckers is array(1..boardGameWidth) of Integer ;
-		--CheckersFull : ArrayOfCheckers ;
-		--IndexArray : Integer;
 	begin
-
-		--for IndexArray in 1..boardGameWidth loop
-		--	CheckersFull(IndexArray) := 0;
-		--end loop;
 
 		while isValid = false loop
 			Put_Line("It's time for number 1 to play");
 			Put_Line("Select the Row number where you want to play");
 
 			-- On récupère la valeur tapée par l'utilisateur dans column
-			
 			Ada.Integer_Text_IO.Get(Column);
-			
 			
 			-- Traitement du cas où la valeur retournée est en dehors des valeurs du tableau de jeu
 			if Column < 1 or Column > boardGameWidth then
@@ -220,11 +211,7 @@ package body puissance4 is
 				while Row < boardGameHeight and E(Row, Column) /= signEmptyCase loop
 					Row := Row + 1;
 				end loop;  
-				--if Row = boardGameHeight+1 then
-				--	Put_Line("teeestcamerereefss");
-				--end if;
 				-- Si on est à la dernière ligne ou plus, on renvoie un message d'erreur
-				-- ne marche pas car il y a un raised constraint error
 				if Row > boardGameHeight then 
 					Put_Line("This column is already full, please try again");
 				elsif E(Row,Column)=signEmptyCase then
@@ -246,24 +233,14 @@ package body puissance4 is
 		isValid : Boolean := false;
 		Row : Integer;
 		Column : Integer;
-		--Type ArrayOfCheckers is array(1..boardGameWidth) of Integer ;
-		--CheckersFull : ArrayOfCheckers ;
-		--IndexArray : Integer;
 	begin
-
-		--for IndexArray in 1..boardGameWidth loop
-		--	CheckersFull(IndexArray) := 0;
-		--end loop;
 
 		while isValid = false loop
 			Put_Line("It's time for number 2 to play");
 			Put_Line("Select the Row number where you want to play");
 
 			-- On récupère la valeur tapée par l'utilisateur dans column
-			
 			Ada.Integer_Text_IO.Get(Column);
-			
-			
 			-- Traitement du cas où la valeur retournée est en dehors des valeurs du tableau de jeu
 			if Column < 1 or Column > boardGameWidth then
 				Put("The value must be between 1 and");
@@ -276,11 +253,7 @@ package body puissance4 is
 				while Row < boardGameHeight and E(Row, Column) /= signEmptyCase loop
 					Row := Row + 1;
 				end loop;  
-				--if Row = boardGameHeight+1 then
-				--	Put_Line("teeestcamerereefss");
-				--end if;
 				-- Si on est à la dernière ligne ou plus, on renvoie un message d'erreur
-				-- ne marche pas car il y a un raised constraint error
 				if Row > boardGameHeight then 
 					Put_Line("This column is already full, please try again");
 				elsif E(Row,Column)=signEmptyCase then
@@ -295,7 +268,6 @@ package body puissance4 is
 		return Play;
 	end Coup_Joueur2;
 
-	--procedure Initialiser(E:in out Etat, Etp : in out EtatTopPion) is 
 	procedure Initialiser(E : in out Etat) is
 		Row : Integer :=1;
 		Column : Integer :=1;
@@ -352,8 +324,19 @@ package body puissance4 is
 		ColumnHori : Integer :=1;
 		-- Compteur pour voir combien il y a de pions alignes a la suite 
 		num_checkers_aligned1 : Integer:=0;
+		num_checkers_aligned2 : Integer:=0;
 		num_empty_case : Integer := 0;
 		Max_num_checkers_aligned1 : Integer := 0;
+		Max_num_checkers_aligned2 : Integer := 0;
+		-- Permet de compter le nombre de checkers pour chaque joueur dans l'état courant		
+		nbcheckers1 : Integer := 0; 
+		nbcheckers2 : Integer := 0;
+		--Permet de stocker la difference entre Max_num_checkers_aligned1 et Max_..2
+		diff : Integer := 0;
+		-- Retourne la valeur du cout de l'evaluation
+		cout : Integer := 0;
+		-- Boolean pour l'etude horizontale pour voir s'il y a eu un enchainement pion joueur1 - pion joueur2
+		isChanged : Boolean := false;
 		
 	begin	
 		-- On a suposse dans moteur_jeu que l'ordinateur etait le joueur 1 donc il joue des coups de signes signPlayer1
@@ -364,38 +347,47 @@ package body puissance4 is
 				Row := Row + 1;
 			end loop;
 				Row := Row - 1;
-				-- si le signe correspond à celui du joueur J, on incrémente le nombre de pièces
+				
+				-- si le signe correspond à celui du joueur J, on incrémente le nombre de pièces alignées de joueur 1
 				if E(Row, Column)= signPlayer1 and Row > 1 then
 					while E(Row, Column) = signPlayer1 loop
 						num_checkers_aligned1 := num_checkers_aligned1 + 1;
 						Row := Row-1;
 					end loop;
-				--elsif E(Row, Column)= signPlayer2 then 
-				--	num_checkers_aligned2 := num_checkers_aligned2 + 1;
-				
-				-- si le signe ne correspond pas à celui du joueur J, on remet là valeur de num_checkers_aligned à 0
-				elsif E(Row, Column) /= signPlayer1 then
-					Max_num_checkers_aligned1 := Integer'Max (Max_num_checkers_aligned1, num_checkers_aligned1);
-					num_checkers_aligned1 := 0;
+				-- si le signe correspond à celui du joueur J, on incrémente le nombre de pièces alignées de joueur 2
+				elsif E(Row, Column)= signPlayer2 then 
+					num_checkers_aligned2 := num_checkers_aligned2 + 1;
+					while E(Row, Column) = signPlayer2 loop
+						num_checkers_aligned1 := num_checkers_aligned1 + 1;
+						Row := Row-1;
+					end loop;
 				end if;
+				-- On stocke les valeurs max du joueur 1 et joueur 2
+					Max_num_checkers_aligned1 := Integer'Max (Max_num_checkers_aligned1, num_checkers_aligned1);
+					Max_num_checkers_aligned2 := Integer'Max (Max_num_checkers_aligned2, num_checkers_aligned2);
+					num_checkers_aligned1 := 0;
+					num_checkers_aligned2 := 0;
+					Row := 1;
 		end loop;
 
 		-- traitement du cas d'une victoire horizontale
-
 		for Row in 1..boardGameHeight loop
 			-- Si le joueur 2 a un pion sur la colonne 4, il n'y peut pas avoir de situation avantageuse pour l'ordinateur : on passe à la ligne suivante
-			if E(Row,boardGameWidth-nbCheckersToWin+1)= signPlayer2 then
-				num_checkers_aligned1 := 0;
-			else
-				num_checkers_aligned1 := 0;
+			--if E(Row,boardGameWidth-nbCheckersToWin+1)= signPlayer2 then
+			--	num_checkers_aligned1 := 0;
+			--else
+				--num_checkers_aligned1 := 0;
 				-- on ne va parcourir le plateau dans le sens horizontal du pion 1 au pion 7-4+1= 4 car cela suffit à atteindre toutes les pièces du plateau
 				for Column in 1..boardGameWidth loop
 					
 					if E(Row,Column) = signEmptyCase then
 						num_empty_case := num_empty_case + 1;
-					elsif E(Row,Column) = signPlayer1 then 
+					elsif E(Row,Column) = signPlayer1 and isChanged=false then 
 						num_checkers_aligned1 := num_checkers_aligned1 + 1;
-					elsif E(Row, Column) = signPlayer2 then
+
+					elsif E(Row, Column) = signPlayer2 and isChanged=false then
+						num_checkers_aligned2 := num_checkers_aligned2 + 1;
+
 						if num_checkers_aligned1+num_empty_case >= nbCheckersToWin then 
 							Max_num_checkers_aligned1 := Integer'Max (Max_num_checkers_aligned1, num_checkers_aligned1);
 							num_checkers_aligned1 := 0;
@@ -403,20 +395,68 @@ package body puissance4 is
 						else
 							num_checkers_aligned1 := 0;
 							num_empty_case := 0;
-						end if;		
+						end if;	
+						isChanged := true;
+
+					elsif E(Row,Column) = signPlayer1 and isChanged=true then 
+						num_checkers_aligned1 := num_checkers_aligned1 + 1;
+						if num_checkers_aligned2+num_empty_case >= nbCheckersToWin then 
+							Max_num_checkers_aligned2 := Integer'Max (Max_num_checkers_aligned2, num_checkers_aligned2);
+							num_checkers_aligned2 := 0;
+							num_empty_case := 0;
+						else
+							num_checkers_aligned1 := 0;
+							num_empty_case := 0;
+						end if;	
+						isChanged := false;
+					elsif E(Row, Column) = signPlayer2 and isChanged=true then
+						num_checkers_aligned2 := num_checkers_aligned2 + 1;
 					end if;
-
 				end loop;
-			end if;
+			--end if;
 		end loop;
-		-- Code Samuel
 
+		--Traitement des comptes de points
+		if(Max_num_checkers_aligned1 = 4 or Max_num_checkers_aligned2 = 4) then
+			if(Max_num_checkers_aligned1 = 4) then
+				cout := 100;				
+				return cout;
+				elsif (Max_num_checkers_aligned2 = 4) then return -cout;					
+			end if;
+		--AUTRES CAS:	 
+		elsif(Max_num_checkers_aligned1/=4 and Max_num_checkers_aligned2/=4) then
+			diff := Max_num_checkers_aligned1 - Max_num_checkers_aligned2;
+			if(diff = 0) then
+				for Column in 1..boardGameWidth loop
+					for Row in 1..boardGameHeight loop			     
+				   		if E(Row, Column)= signPlayer1 then
+ 							nbcheckers1 := nbcheckers1 + 1;
+			     		end if;
+		
+					     if E(Row, Column)= signPlayer2 then
+							nbcheckers2 := nbcheckers2 + 1;
+					     end if; 
+					end loop;
+				end loop;
 
-
-		--COde samuel
-		return Max_num_checkers_aligned1;
+				if(nbcheckers1 > nbcheckers2) then
+					cout := 5;					
+				elsif(nbcheckers2 > nbcheckers1) then
+					cout := -5;
+				elsif(nbcheckers1 = nbcheckers2) then
+				cout := 0;
+				end if;
+			end if;
+			if(diff>0) then
+				cout := 10*diff;
+			end if;		
+			if(diff<0) then
+				cout := -10*diff;
+			end if;
+		else 
+			cout :=1000;
+			Put_Line("Il y a eu une erreur");
+		end if;
+		return cout;
 	end Eval;
-
-
-
 end puissance4;

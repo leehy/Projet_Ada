@@ -30,12 +30,12 @@ package body Moteur_Jeu is
 		-- On lui associe un iterateur
 		It_Possible := Liste_Coups.Creer_Iterateur(LCoups_Possible);
 		
-		Val_Max := Eval_Min_Max(E,Profondeur, Liste_Coups.Element_Courant(It_Possible), JoueurMoteur); --Liste_Coups.Element_Courant(It_Possible),
+		Val_Max := Eval_Min_Max(E,Profondeur-1, Liste_Coups.Element_Courant(It_Possible), JoueurMoteur); --Liste_Coups.Element_Courant(It_Possible),
 		Liste_Coups.Insere_Tete(Liste_Coups.Element_Courant(It_Max), LCoups_Max);
 		TailleDeListe := 1; 
 
 		while Liste_Coups.A_Suivant(It_Possible) loop
-			Val_Tmp := Eval_Min_Max(E,Profondeur,Liste_Coups.Element_Courant(It_Possible), JoueurMoteur); --Liste_Coups.Element_Courant(It_Possible),
+			Val_Tmp := Eval_Min_Max(E,Profondeur-1,Liste_Coups.Element_Courant(It_Possible), JoueurMoteur); --Liste_Coups.Element_Courant(It_Possible),
 			if Val_Tmp > Val_Max then
 				Val_Max := Val_Tmp;
 				Liste_Coups.Libere_Iterateur(It_Possible);
@@ -123,7 +123,8 @@ package body Moteur_Jeu is
 		end loop;
 		
 		valFinale := valMax;
-		
+		--Liste_Coups.Libere_Iterateur(It_Possible);
+		--Liste_Coups.Libere_Liste(LCoups_Possible);
 		return valFinale;
 		
 	end if;
@@ -156,7 +157,8 @@ package body Moteur_Jeu is
 		end loop;		
 
 		valFinale := valMin;
-		
+		--Liste_Coups.Libere_Iterateur(It_Possible);
+		--Liste_Coups.Libere_Liste(LCoups_Possible);
 		return valFinale;
 		
 	end if;
