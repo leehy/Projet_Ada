@@ -290,6 +290,7 @@ package body puissance4 is
 		Cpt : Integer:=0;
 	begin
 		for Column in 1..boardGameWidth loop
+
 				while Row < boardGameHeight+1 and E(Row, Column) /= signEmptyCase loop
 					Row := Row + 1;
 				end loop;
@@ -309,6 +310,7 @@ package body puissance4 is
 					Put(Integer'Image(Column));
 					Put(" is full");
 				end if;
+				
 		end loop;
 		return L;
 	end Coups_Possibles;
@@ -420,6 +422,8 @@ package body puissance4 is
 				end loop;
 			--end if;
 		end loop;
+
+		
 
 		--Traitement des comptes de points
 		if(Max_num_checkers_aligned1 = 4 or Max_num_checkers_aligned2 = 4) then

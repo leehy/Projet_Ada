@@ -1,5 +1,6 @@
 with Participant; use Participant; 
 with Liste_Generique;
+with Puissance4;
 with Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Ada.Strings; use Ada.Strings;
@@ -32,34 +33,36 @@ package body Moteur_Jeu is
 		It_Possible := Liste_Coups.Creer_Iterateur(LCoups_Possible);
 		
 		Val_Max := Eval_Min_Max(E,Profondeur-1, Liste_Coups.Element_Courant(It_Possible), JoueurMoteur); --Liste_Coups.Element_Courant(It_Possible),
-		Liste_Coups.Insere_Tete(Liste_Coups.Element_Courant(It_Max), LCoups_Max);
+		Liste_Coups.Insere_Tete(Liste_Coups.Element_Courant(It_Possible), LCoups_Max);
 		TailleDeListe := 1; 
 
 		while Liste_Coups.A_Suivant(It_Possible) loop
 			Val_Tmp := Eval_Min_Max(E,Profondeur-1,Liste_Coups.Element_Courant(It_Possible), JoueurMoteur); --Liste_Coups.Element_Courant(It_Possible),
 			if Val_Tmp > Val_Max then
 				Val_Max := Val_Tmp;
-				Liste_Coups.Libere_Iterateur(It_Possible);
+				Liste_Coups.Libere_Liste(LCoups_Max);
 				Liste_Coups.Insere_Tete(Liste_Coups.Element_Courant(It_Possible), LCoups_Max);	
 				TailleDeListe := 1 ;	
 			-- if Val_Tmp < Val_Max
 			-- Il ne se passe rien
-			elsif Val_Tmp = Val_Max then
+			end if;
+			if Val_Tmp = Val_Max then
 				Liste_Coups.Insere_Tete(Liste_Coups.Element_Courant(It_Possible), LCoups_Max);
 				TailleDeListe:= TailleDeListe + 1;
 			end if;
 			Liste_Coups.Suivant(It_Possible);
 		end loop;
-	
+		It_Max := Liste_Coups.Creer_Iterateur(LCoups_Max);
 		Reset (G);          -- Initialise le générateur (à faire une seule fois)
     	Val := Random (G);    -- Tire un nombre au hasard entre 0 et 50
 		Val := (Val mod TailleDeListe)+1;
-		
-		while Liste_Coups.A_Suivant(It_Max) and Val>1 loop
+
+		while Liste_Coups.A_Suivant(It_Max) loop--and Val>1 loop
 			Val := Val-1;
 			Liste_Coups.Suivant(It_Max);
+			
 		end loop;
-
+		
 		Coup_retourne:=Liste_Coups.Element_Courant(It_Max);
 
 		Liste_Coups.Libere_Iterateur(It_Possible);
