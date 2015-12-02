@@ -21,9 +21,9 @@ package puissance4 is
 	type CelluleC is record
 		-- Signe du coup (soit signPlayer1, soit signPlayer2, soit signEmptyCase)
 		Sign : Character;
-		-- numero de la colonne
-		numColumn : Integer;
 		-- numero de la ligne
+		numColumn : Integer;
+		-- numero de la colonne
 		numRow : Integer;
 	end record;
 	type Coup is access CelluleC;
