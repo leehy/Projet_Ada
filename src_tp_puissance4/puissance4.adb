@@ -142,12 +142,12 @@ package body puissance4 is
 
     -- Indique si l'etat courant est un status quo (match nul)
     function Est_Nul(E : Etat) return Boolean is 
-		Column : Integer:=boardGameWidth;
-		Row : Integer :=1;
+		Column : Integer:=1;
+		Row : Integer :=boardGameHeight;
 	begin
 		-- on ne va verifier que la ligne tout en haut pour economiser des operations
 		-- S'il reste une case vide, retourne false, sinon retourne true
-		for Row in 1..boardGameWidth loop
+		for Column in 1..boardGameWidth loop
 			if E(Column, Row) = signEmptyCase then
 				return false;
 			end if;
@@ -285,7 +285,7 @@ package body puissance4 is
 	begin
 		for Column in 1..boardGameWidth loop
 				Row := 1;
-				while Row < boardGameHeight+1 and Row>0 and E(Column, Row) /= signEmptyCase loop
+				while Row < boardGameHeight and Row>0 and E(Column, Row) /= signEmptyCase loop
 					Row := Row + 1;
 				end loop;	
 				
@@ -343,11 +343,11 @@ package body puissance4 is
 		isChanged : Boolean := false;
 		
 	begin	
-		-- On a suposse dans moteur_jeu que l'ordinateur etait le joueur 1 donc il joue des coups de signes signPlayer1
+		-- On a supose dans moteur_jeu que l'ordinateur etait le joueur 1 donc il joue des coups de signes signPlayer1
 		-- traitement du cas d'une victoire verticale
 		-- on parcourt toutes les colonnes
 		for Column in 1..boardGameWidth loop
-			while E(Column,Row) /= signEmptyCase loop
+			while E(Column,Row) /= signEmptyCase and Row < boardGameHeight and Row > 0 loop
 				Row := Row + 1;
 			end loop;
 				-- si le signe correspond à celui du joueur J, on incrémente le nombre de pièces alignées de joueur 1
