@@ -277,17 +277,22 @@ package body puissance4 is
 	
 	function Coups_Possibles(E : Etat; J : Joueur) return Liste_Coups.Liste is
 		Column : Integer:=1;
-		Row : Integer:=1;
+		Row : Integer;
 		L : Liste_Coups.Liste;
 		Sign : Character;
 		CoupPossible : Coup;
 		Cpt : Integer:=0;
 	begin
-		for Row in 1..boardGameWidth loop
-
-				while Column < boardGameWidth+1 and E(Column, Row) /= signEmptyCase loop
-					Column := Column + 1;
-				end loop;
+		for Column in 1..boardGameWidth loop
+				Row := 1;
+				while Row < boardGameHeight+1 and Row>0 and E(Column, Row) /= signEmptyCase loop
+					Row := Row + 1;
+				end loop;	
+				
+				--if Row /= 1 then
+				--	Row := Row-1;
+				--end if;
+				Put(Row); Put_Line("");
 				if Column < boardGameWidth + 1 then
 					if J = Joueur1 then
 						Sign := signPlayer1;
@@ -300,8 +305,8 @@ package body puissance4 is
 				--Put(Cpt);
 				--Put_Line("");
 				else 
-					Put("The Row ");
-					Put(Integer'Image(Row));
+					Put("The Column ");
+					Put(Integer'Image(Column));
 					Put(" is full");
 				end if;
 				
@@ -341,25 +346,22 @@ package body puissance4 is
 		-- On a suposse dans moteur_jeu que l'ordinateur etait le joueur 1 donc il joue des coups de signes signPlayer1
 		-- traitement du cas d'une victoire verticale
 		-- on parcourt toutes les colonnes
-		for Row in 1..boardGameWidth loop
+		for Column in 1..boardGameWidth loop
 			while E(Column,Row) /= signEmptyCase loop
-				Column := Column + 1;
+				Row := Row + 1;
 			end loop;
-				if Column /=1 then
-				Column := Column - 1;
-				end if;
 				-- si le signe correspond à celui du joueur J, on incrémente le nombre de pièces alignées de joueur 1
-				if E(Column, Row)= signPlayer1 and Column > 1 and Column < boardGameWidth then
-					while E(Column, Row) = signPlayer1 loop
+				if E(Column, Row)= signPlayer1 and Row > 1 and Row < boardGameWidth then
+					while E(Column, Row) = signPlayer1 and Row > 1 loop
 						num_checkers_aligned1 := num_checkers_aligned1 + 1;
-						Column := Column-1;
+						Row := Row-1;
 					end loop;
 				-- si le signe correspond à celui du joueur J, on incrémente le nombre de pièces alignées de joueur 2
-				elsif E(Column, Row)= signPlayer2 and Column > 1  and Column < boardGameWidth then 
+				elsif E(Column, Row)= signPlayer2 and Row > 1 and Row < boardGameHeight then 
 					num_checkers_aligned2 := num_checkers_aligned2 + 1;
-					while E(Column, Row) = signPlayer2 loop
+					while E(Column, Row) = signPlayer2 and Row > 1 loop
 						num_checkers_aligned1 := num_checkers_aligned1 + 1;
-						Column := Column-1;
+						Row := Row-1;
 					end loop;
 				end if;
 				-- On stocke les valeurs max du joueur 1 et joueur 2
@@ -367,25 +369,24 @@ package body puissance4 is
 					Max_num_checkers_aligned2 := Integer'Max (Max_num_checkers_aligned2, num_checkers_aligned2);
 					num_checkers_aligned1 := 0;
 					num_checkers_aligned2 := 0;
-					Column := 1;
+					Row := 1;
 		end loop;
 
-		Put_Line("Test 1");
+		--Put_Line("Test 1");
 		-- traitement du cas d'une victoire horizontale
-		for Column in 1..boardGameWidth loop
+		for Row in 1..boardGameHeight loop
 			-- Si le joueur 2 a un pion sur la colonne 4, il n'y peut pas avoir de situation avantageuse pour l'ordinateur : on passe à la ligne suivante
 			--if E(Column,boardGameWidth-nbCheckersToWin+1)= signPlayer2 then
 			--	num_checkers_aligned1 := 0;
 			--else
 				--num_checkers_aligned1 := 0;
 				-- on ne va parcourir le plateau dans le sens horizontal du pion 1 au pion 7-4+1= 4 car cela suffit à atteindre toutes les pièces du plateau
-				for Row in 1..boardGameWidth loop
+				for Column in 1..boardGameWidth loop
 					
 					if E(Column,Row) = signEmptyCase then
 						num_empty_case := num_empty_case + 1;
 					elsif E(Column,Row) = signPlayer1 and isChanged=false then 
 						num_checkers_aligned1 := num_checkers_aligned1 + 1;
-
 					elsif E(Column, Row) = signPlayer2 and isChanged=false then
 						num_checkers_aligned2 := num_checkers_aligned2 + 1;
 
@@ -460,7 +461,7 @@ package body puissance4 is
 			cout :=1000;
 			Put_Line("Il y a eu une erreur");
 		end if;
-		Put(cout);
+		--Put(cout);
 		return cout;
 	end Eval;
 end puissance4;

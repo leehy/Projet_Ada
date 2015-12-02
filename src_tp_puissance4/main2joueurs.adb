@@ -37,7 +37,8 @@ procedure Main2Joueurs is
 				  MyPuissance4.Est_Nul,
 				  MyPuissance4.Affiche_Jeu,
 				  MyPuissance4.Affiche_Coup,
-				  MyPuissance4.Coup_Joueur1,
+				  --MyPuissance4.Coup_Joueur1,
+				  MyMoteur_jeu.Choix_Coup,
 				  MyPuissance4.Coup_Joueur2);
    use MyPartie;
 
