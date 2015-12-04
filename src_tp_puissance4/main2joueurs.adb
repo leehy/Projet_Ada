@@ -23,7 +23,7 @@ procedure Main2Joueurs is
 					  MyPuissance4.Liste_Coups,
 					  MyPuissance4.Coups_Possibles,
 					  MyPuissance4.Eval,
-					  4,
+					  6,
 					  Joueur1);
 	use MyMoteur_jeu;
 

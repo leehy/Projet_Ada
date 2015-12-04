@@ -160,6 +160,7 @@ package body puissance4 is
 		Column : Integer:=boardGameWidth;	
 		Row : Integer:=1;
 	begin 
+		Put_Line("");
 		-- On affiche des indicateurs de colonnes
 		Put("|");
 		for Row in 1..boardGameWidth loop
@@ -181,7 +182,10 @@ package body puissance4 is
     procedure Affiche_Coup(C : in Coup) is
 		Play : Coup := C;
 	begin
+		Put_Line("");
+		Put_Line("---------------------------------");
 		Put_Line("The next play is " & Character'Image(Play.Sign) & " in Column number " & Integer'Image(Play.numColumn));
+		Put_Line("---------------------------------");
 	end Affiche_Coup;
    
     -- Retourne le prochain coup joue par le joueur1
@@ -289,10 +293,6 @@ package body puissance4 is
 					Row := Row + 1;
 				end loop;	
 				
-				--if Row /= 1 then
-				--	Row := Row-1;
-				--end if;
-				--Put(Row); Put_Line("");
 				if Column < boardGameWidth + 1 then
 					if J = Joueur1 then
 						Sign := signPlayer1;
@@ -301,15 +301,11 @@ package body puissance4 is
 					end if;
 					CoupPossible := new CelluleC'(Sign, Column, Row);
 					Liste_Coups.Insere_Tete(CoupPossible, L);
-					--Cpt := Cpt + 1 ;
-				--Put(Cpt);
-				--Put_Line("");
-				else 
+				elsif Row=boardGameHeight and E(Column,boardGameHeight)/= signEmptyCase then
 					Put("The Column ");
 					Put(Integer'Image(Column));
 					Put(" is full");
 				end if;
-				
 		end loop;
 		return L;
 	end Coups_Possibles;
