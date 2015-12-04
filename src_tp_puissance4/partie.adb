@@ -12,7 +12,8 @@ with main2joueurs;
 	Coup1, Coup2 : Coup;
 	JBis : Joueur;
 	begin
-		while Est_Gagnant(E,J) = false or Est_Nul(E) = false loop
+		if Est_Gagnant(E,J) = false or Est_Nul(E) = false then
+		
 			Affiche_Jeu(E);
 				if (J=Joueur1) then		
 					Put("It's time for "); Put(Nom_Joueur1); Put_Line(" to play");
@@ -32,21 +33,27 @@ with main2joueurs;
 				end if; 
 			if Est_Gagnant(E,J) or Est_Gagnant(E,JBis) then
 				if (J=Joueur1) then
-					Put_Line("Joueur 1 a gagné!"); 
-					exit;
+					Affiche_Jeu(E);
+					Put_Line("---------------------------------"); Put_Line("");Put_Line("");
+					Put_Line("Joueur 1 has won !"); Put_Line("");Put_Line("");
+					Put_Line("---------------------------------");
+					return;
 				else 	
-					Put_Line("Joueur 2 a gagné!");
-					exit;
+					Affiche_Jeu(E);
+					Put_Line("---------------------------------"); Put_Line("");Put_Line("");
+					Put_Line("Joueur 2 has won !"); Put_Line("");Put_Line("");
+					Put_Line("---------------------------------");
+					return;
 				end if;
 				
 			elsif Est_Nul(E) then
-				Put_Line("Match Nul !");
-				exit;
+				Affiche_Jeu(E);
+				Put_Line("It's a draw !");
+				return;
 			else
-				Put_Line("CA JOUE ENCORE");
 				Joue_Partie(E, JBis);
 			end if;
-		end loop;
+		end if;
 
     end Joue_Partie;
 end Partie;

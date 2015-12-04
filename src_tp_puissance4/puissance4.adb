@@ -292,7 +292,7 @@ package body puissance4 is
 				--if Row /= 1 then
 				--	Row := Row-1;
 				--end if;
-				Put(Row); Put_Line("");
+				--Put(Row); Put_Line("");
 				if Column < boardGameWidth + 1 then
 					if J = Joueur1 then
 						Sign := signPlayer1;
@@ -375,12 +375,6 @@ package body puissance4 is
 		--Put_Line("Test 1");
 		-- traitement du cas d'une victoire horizontale
 		for Row in 1..boardGameHeight loop
-			-- Si le joueur 2 a un pion sur la colonne 4, il n'y peut pas avoir de situation avantageuse pour l'ordinateur : on passe à la ligne suivante
-			--if E(Column,boardGameWidth-nbCheckersToWin+1)= signPlayer2 then
-			--	num_checkers_aligned1 := 0;
-			--else
-				--num_checkers_aligned1 := 0;
-				-- on ne va parcourir le plateau dans le sens horizontal du pion 1 au pion 7-4+1= 4 car cela suffit à atteindre toutes les pièces du plateau
 				for Column in 1..boardGameWidth loop
 					
 					if E(Column,Row) = signEmptyCase then
@@ -418,7 +412,147 @@ package body puissance4 is
 			--end if;
 		end loop;
 
-		
+
+
+		--traitement du cas d'une diagonale ascendante de la gauche vers la droite
+		num_checkers_aligned1 := 0;
+		num_checkers_aligned2 := 0;
+		num_empty_case := 0;
+		Row := 1;
+		Column := 1;
+		--On parcourt le petit plateau de taille 4-4 qui va permettre d'atteindre tout les pions qui permettent de gagner via une diagonale ascendante
+		for Row in 1..(boardGameHeight-nbCheckersToWin + 1) loop
+		    for Column in 1..(boardGameWidth-nbCheckersToWin + 1) loop	
+				-- Si la case est vide 	et que la prochaine case de la diagonale est un pion du joueur 2
+				if (E(Column, Row) = signPlayer2) or (E(Column, Row) = signEmptyCase and E(Column+1, Row+1)=signPlayer2) then
+					if E(Column, Row) = signEmptyCase then 
+						num_empty_case:= num_empty_case+1;
+					elsif E(Column,Row) = signPlayer2 then
+						num_checkers_aligned2 := num_checkers_aligned2 + 1;
+					end if;
+					RowDiag := Row + 1;
+					ColumnDiag := Column + 1;
+					while (E(ColumnDiag, RowDiag) = signPlayer2 or E(ColumnDiag, RowDiag) = signEmptyCase) and (RowDiag < Row + nbCheckersToWin -1) 
+					and (ColumnDiag < Column + nbCheckersToWin -1) loop
+						if E(ColumnDiag, RowDiag) = signPlayer2 then
+							num_checkers_aligned2 := num_checkers_aligned2 + 1;
+						elsif E(ColumnDiag, RowDiag) = signEmptyCase then
+							num_empty_case := num_empty_case + 1;
+						end if;
+						RowDiag := RowDiag + 1;
+						ColumnDiag := ColumnDiag + 1;
+					end loop;
+
+					if (num_checkers_aligned2 + num_empty_case >= nbCheckersToWin) then
+						Max_num_checkers_aligned2 := Integer'Max(Max_num_checkers_aligned2, num_checkers_aligned2);
+						num_checkers_aligned2 := 0;
+						num_empty_case := 0;
+					else 		
+						num_checkers_aligned2 := 0;
+						num_empty_case := 0;
+					end if;		
+				-- Si la case est vide 	et que la prochaine case de la diagonale est un pion du joueur 1
+				elsif (E(Column, Row) = signPlayer1) or (E(Column, Row) = signEmptyCase and E(Column+1, Row+1)=signPlayer1) then
+					if E(Column, Row) = signEmptyCase then 
+						num_empty_case:= num_empty_case+1;
+					elsif E(Column,Row) = signPlayer1 then
+						num_checkers_aligned1 := num_checkers_aligned1 + 1;
+					end if;
+					RowDiag := Row + 1;
+					ColumnDiag := Column + 1;
+					while (E(ColumnDiag, RowDiag) = signPlayer2 or E(ColumnDiag, RowDiag) = signEmptyCase) and (RowDiag < Row + nbCheckersToWin -1) 
+					and (ColumnDiag < Column + nbCheckersToWin -1) loop
+						if E(ColumnDiag, RowDiag) = signPlayer1 then
+							num_checkers_aligned1 := num_checkers_aligned1 + 1;
+						elsif E(ColumnDiag, RowDiag) = signEmptyCase then
+							num_empty_case := num_empty_case + 1;
+						end if;
+						RowDiag := RowDiag + 1;
+						ColumnDiag := ColumnDiag + 1;
+					end loop;
+
+					if (num_checkers_aligned1 + num_empty_case >= nbCheckersToWin) then
+						Max_num_checkers_aligned1 := Integer'Max(Max_num_checkers_aligned1, num_checkers_aligned1);
+						num_checkers_aligned1 := 0;
+						num_empty_case := 0;
+					else 		
+						num_checkers_aligned1 := 0;
+						num_empty_case := 0;
+					end if;	
+				end if;
+			end loop;
+		end loop;
+
+		--traitement du cas d'une diagonale descendante de la gauche vers la droite
+		num_checkers_aligned1 := 0;
+		num_checkers_aligned2 := 0;
+		num_empty_case := 0;
+		Row := 1;
+		Column := 1;
+		--On parcourt le petit plateau de taille 4-4 en haut à gauche qui va permettre d'atteindre tout les pions qui permettent de gagner via une diagonale ascendante
+		for Row in (boardGameHeight-nbCheckersToWin + 1)..boardGameHeight loop
+		    for Column in 1..(boardGameWidth-nbCheckersToWin + 1) loop	
+				-- Si la case est vide 	et que la prochaine case de la diagonale est un pion du joueur 2
+				if (E(Column, Row) = signPlayer2) or (E(Column, Row) = signEmptyCase and E(Column+1, Row-1)=signPlayer2) then
+					if E(Column, Row) = signEmptyCase then 
+						num_empty_case:= num_empty_case+1;
+					elsif E(Column,Row) = signPlayer2 then
+						num_checkers_aligned2 := num_checkers_aligned2 + 1;
+					end if;
+					RowDiag := Row - 1;
+					ColumnDiag := Column + 1;
+					while (E(ColumnDiag, RowDiag) = signPlayer2 or E(ColumnDiag, RowDiag) = signEmptyCase) and (ColumnDiag < Column + nbCheckersToWin -1) loop
+						if E(ColumnDiag, RowDiag) = signPlayer2 then
+							num_checkers_aligned2 := num_checkers_aligned2 + 1;
+						elsif E(ColumnDiag, RowDiag) = signEmptyCase then
+							num_empty_case := num_empty_case + 1;
+						end if;
+						RowDiag := RowDiag - 1;
+						ColumnDiag := ColumnDiag + 1;
+					end loop;
+
+					if (num_checkers_aligned2 + num_empty_case >= nbCheckersToWin) then
+						Max_num_checkers_aligned2 := Integer'Max(Max_num_checkers_aligned2, num_checkers_aligned2);
+						num_checkers_aligned2 := 0;
+						num_empty_case := 0;
+					else 		
+						num_checkers_aligned2 := 0;
+						num_empty_case := 0;
+					end if;		
+				-- Si la case est vide 	et que la prochaine case de la diagonale est un pion du joueur 1
+				elsif (E(Column, Row) = signPlayer1) or (E(Column, Row) = signEmptyCase and E(Column+1, Row-1)=signPlayer1) then
+					if E(Column, Row) = signEmptyCase then 
+						num_empty_case:= num_empty_case+1;
+					elsif E(Column,Row) = signPlayer1 then
+						num_checkers_aligned1 := num_checkers_aligned1 + 1;
+					end if;
+					RowDiag := Row - 1;
+					ColumnDiag := Column + 1;
+					while (E(ColumnDiag, RowDiag) = signPlayer1 or E(ColumnDiag, RowDiag) = signEmptyCase) and (ColumnDiag < Column + nbCheckersToWin -1) loop
+						if E(ColumnDiag, RowDiag) = signPlayer1 then
+							num_checkers_aligned2 := num_checkers_aligned1 + 1;
+						elsif E(ColumnDiag, RowDiag) = signEmptyCase then
+							num_empty_case := num_empty_case + 1;
+						end if;
+						RowDiag := RowDiag - 1;
+						ColumnDiag := ColumnDiag + 1;
+					end loop;
+
+					if (num_checkers_aligned1 + num_empty_case >= nbCheckersToWin) then
+						Max_num_checkers_aligned2 := Integer'Max(Max_num_checkers_aligned1, num_checkers_aligned1);
+						num_checkers_aligned1 := 0;
+						num_empty_case := 0;
+					else 		
+						num_checkers_aligned1 := 0;
+						num_empty_case := 0;
+					end if;		
+				end if;
+			end loop;
+		end loop;
+
+
+
+
 
 		--Traitement des comptes de points
 		if(Max_num_checkers_aligned1 = 4 or Max_num_checkers_aligned2 = 4) then
