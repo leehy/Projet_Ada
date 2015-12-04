@@ -293,7 +293,7 @@ package body puissance4 is
 					Row := Row + 1;
 				end loop;	
 				
-				if Column < boardGameWidth + 1 then
+				if Column < boardGameWidth + 1 and E(Column,Row)=signEmptyCase then
 					if J = Joueur1 then
 						Sign := signPlayer1;
 					else 
@@ -301,10 +301,10 @@ package body puissance4 is
 					end if;
 					CoupPossible := new CelluleC'(Sign, Column, Row);
 					Liste_Coups.Insere_Tete(CoupPossible, L);
-				elsif Row=boardGameHeight and E(Column,boardGameHeight)/= signEmptyCase then
-					Put("The Column ");
-					Put(Integer'Image(Column));
-					Put(" is full");
+				--else
+					--Put("The Column ");
+					--Put(Integer'Image(Column));
+					--Put_Line(" is full");
 				end if;
 		end loop;
 		return L;
@@ -368,7 +368,6 @@ package body puissance4 is
 					Row := 1;
 		end loop;
 
-		--Put_Line("Test 1");
 		-- traitement du cas d'une victoire horizontale
 		for Row in 1..boardGameHeight loop
 				for Column in 1..boardGameWidth loop
@@ -407,8 +406,6 @@ package body puissance4 is
 				end loop;
 			--end if;
 		end loop;
-
-
 
 		--traitement du cas d'une diagonale ascendante de la gauche vers la droite
 		num_checkers_aligned1 := 0;
@@ -545,10 +542,6 @@ package body puissance4 is
 				end if;
 			end loop;
 		end loop;
-
-
-
-
 
 		--Traitement des comptes de points
 		if(Max_num_checkers_aligned1 = 4 or Max_num_checkers_aligned2 = 4) then
