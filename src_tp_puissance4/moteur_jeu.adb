@@ -55,7 +55,7 @@ package body Moteur_Jeu is
 		It_Max := Liste_Coups.Creer_Iterateur(LCoups_Max);
 		Reset (G);          -- Initialise le générateur (à faire une seule fois)
     	Val := Random (G);    -- Tire un nombre au hasard entre 0 et 50
-		Val := (Val mod TailleDeListe)+1;
+		Val := (Val mod TailleDeListe);
 
 		while Liste_Coups.A_Suivant(It_Max) loop--and Val>1 loop
 			Val := Val-1;
@@ -113,15 +113,8 @@ package body Moteur_Jeu is
 				valMax := tmp;
 			end if;
 		
-			--Cancel_coup(CoupJoue);
-			--Et := EtActuel;
-		
-			--Lsuiv := LcoupsPossibles.Suiv;
-			--Lsuiv := Lsuiv.Suiv;
-			--It_suivant := Liste_Coups.Suivant(It_Possible);
 			Liste_Coups.Suivant(It_Possible);
 			end loop;
-		
 		valFinale := valMax;
 		Liste_Coups.Libere_Iterateur(It_Possible);
 		Liste_Coups.Libere_Liste(LcoupsPossibles);
@@ -144,12 +137,6 @@ package body Moteur_Jeu is
 			if (tmp < valMin) then
 				valMin := tmp;
 			end if;
-			
-			--Cancel_coup(CoupJoue);
-			--Et := EtActuel;
-			
-		--Lsuiv := LcoupsPossibles.Suiv;
-		--Lsuiv := Lsuiv.Suiv;
 		Liste_Coups.Suivant(It_Possible);
 		end loop;		
 

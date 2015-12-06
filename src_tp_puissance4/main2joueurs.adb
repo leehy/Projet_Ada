@@ -23,7 +23,7 @@ procedure Main2Joueurs is
 					  MyPuissance4.Liste_Coups,
 					  MyPuissance4.Coups_Possibles,
 					  MyPuissance4.Eval,
-					  6, -- marche bien pour P = 0 à 8
+					  7, -- marche bien pour P = 1 à 8
 					  Joueur1);
 	use MyMoteur_jeu;
 
@@ -39,7 +39,9 @@ procedure Main2Joueurs is
 				  MyPuissance4.Affiche_Coup,
 				  --MyPuissance4.Coup_Joueur1,
 				  MyMoteur_jeu.Choix_Coup,
-				  MyPuissance4.Coup_Joueur2);
+				  --MyMoteur_jeu.Choix_Coup
+				  MyPuissance4.Coup_Joueur2
+					);
    use MyPartie;
 
 	 -- definition d'une partie entre un humain en Joueur 1 et un humain en Joueur 2
